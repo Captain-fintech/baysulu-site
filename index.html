@@ -26,16 +26,16 @@
     .form-card{max-width:520px;margin:18px auto;padding:16px;border:1px solid #e5e7eb;border-radius:16px;background:#fff}
     .dark .form-card{background:#0f172a;border-color:#1f2937}
 
-    /* WhatsApp FAB (устойчиво к зуму) */
+    /* WhatsApp FAB — фикс + не «уплывает» */
     .wa-fab{
-      position:fixed; right:12px; bottom:12px; width:60px; height:60px;
-      border-radius:9999px; display:flex; align-items:center; justify-content:center;
-      background:#25D366; color:#fff; box-shadow:0 10px 24px rgba(0,0,0,.25); z-index:1100;
+      position:fixed; inset:auto; right:12px; bottom:12px;
+      width:60px;height:60px;border-radius:9999px;display:flex;align-items:center;justify-content:center;
+      background:#25D366;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.25);z-index:99999;
       transform:translateZ(0); -webkit-transform:translateZ(0); touch-action:manipulation;
     }
-    .wa-fab{ right:max(8px, env(safe-area-inset-right)); bottom:calc(max(8px, env(safe-area-inset-bottom))+8px) }
+    .wa-fab{right:max(12px, env(safe-area-inset-right)); bottom:max(12px, env(safe-area-inset-bottom))}
     @supports (bottom: constant(safe-area-inset-bottom)){
-      .wa-fab{ right:max(8px, constant(safe-area-inset-right)); bottom:calc(max(8px, constant(safe-area-inset-bottom))+8px) }
+      .wa-fab{ right:max(12px, constant(safe-area-inset-right)); bottom:max(12px, constant(safe-area-inset-bottom)) }
     }
     @media (max-width:420px){ .wa-fab{width:56px;height:56px} }
     @media (min-width:768px){ .wa-fab{right:20px;bottom:20px;width:56px;height:56px} }
@@ -57,12 +57,12 @@
 </head>
 <body class="bg-white text-ink">
 
-<!-- ===== Config (edit only values) ===== -->
+<!-- ===== Config (edit values only) ===== -->
 <script>
   const BRAND_NAME="BaySulu";
   const TAG_EN="Pay monthly instead of 4–6 cheques.";
   const TAG_AR="ادفع شهريًا بدلًا من 4–6 شيكات.";
-  const WHATSAPP_NUMBER="971500000000"; // без '+'
+  const WHATSAPP_NUMBER="971500000000";
   const AGENT_COMMISSION_TX="AED 1,200–2,000 per deal";
   const PLATFORM_FEE_TX="~4–5% platform fee (demo)";
 </script>
@@ -72,8 +72,8 @@
   <div class="container-xx mx-auto px-4 py-3 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2">
       <img id="brandLogo" src="./public/images/IMG_0014.jpeg" alt="BaySulu" class="logo-img"
-           onerror="this.style.display='none';document.getElementById('brandText').style.display='inline-block'">
-      <span id="brandText" class="font-extrabold text-2xl text-[color:#16543C]" style="display:none">BaySulu</span>
+           onerror="this.style.display='none';document.getElementById('brandText').style.display='inline-block'"/>
+      <span id="brandText" class="font-extrabold text-2xl" style="color:#16543C;display:none">BaySulu</span>
     </a>
     <nav class="hidden md:flex items-center gap-2">
       <a href="#features" class="nav-link" data-i18n="nav_features">Features</a>
@@ -97,7 +97,7 @@
   </div>
 </header>
 
-<!-- ===== DEMO BANNER (4 языка) ===== -->
+<!-- ===== DEMO BANNER ===== -->
 <div class="mx-auto container-xx px-4 mt-3">
   <div class="demo-banner rounded-xl p-3 border banner-text">
     <span id="banner-i18n">Demo only: This is a demonstration. All payments, calendars and chats are simulated (no backend).</span>
@@ -182,10 +182,10 @@
   <h2 class="text-3xl font-extrabold" data-i18n="register_h2">Create your BaySulu account (demo)</h2>
   <div class="form-card">
     <form id="reg-form" class="grid md:grid-cols-2 gap-3">
-      <input id="reg-name"  class="border p-2 rounded" placeholder="Full name" required>
+      <input id="reg-name" class="border p-2 rounded" placeholder="Full name" required>
       <input id="reg-email" type="email" class="border p-2 rounded" placeholder="Email" required>
       <input id="reg-phone" class="border p-2 rounded" placeholder="Phone" required>
-      <input id="reg-pass"  type="password" class="border p-2 rounded" placeholder="Password" required>
+      <input id="reg-pass" type="password" class="border p-2 rounded" placeholder="Password" required>
       <button class="px-4 py-2 bg-brand text-white rounded md:col-span-2">Register (demo)</button>
     </form>
     <div id="reg-ok" class="text-green-500 mt-2 hidden">✔ Registered (demo). You can now book a viewing &amp; chat.</div>
@@ -246,7 +246,7 @@
       <h3 class="font-semibold mb-2" data-i18n="agent_demo_h3">Add Listing (demo)</h3>
       <form id="agent-form" class="grid md:grid-cols-3 gap-3">
         <input id="f-address" class="border p-2 rounded" data-i18n-placeholder="ph_address" placeholder="Address" required>
-        <input id="f-price"   type="number" class="border p-2 rounded" data-i18n-placeholder="ph_price" placeholder="Price (AED)" required>
+        <input id="f-price" type="number" class="border p-2 rounded" data-i18n-placeholder="ph_price" placeholder="Price (AED)" required>
         <button class="px-4 py-2 bg-brand text-white rounded" data-i18n="btn_add">Add</button>
       </form>
       <div class="mt-4 grid sm:grid-cols-2 gap-3" id="agent-cards"></div>
@@ -257,7 +257,7 @@
 
 <!-- ===== PRICING ===== -->
 <section id="pricing" class="container-xx mx-auto px-4 py-14">
-  <h2 class="text-3xl font-extrabold" data-i18n="pricing_h2">Pricing & Security</h2>
+  <h2 class="text-3xl font-extrabold" data-i18n="pricing_h2">Pricing &amp; Security</h2>
   <div class="grid md:grid-cols-2 gap-6 mt-8">
     <div class="p-6 border rounded-2xl shadow-soft">
       <h3 class="font-semibold text-lg" data-i18n="pricing_fee_h3">Fees (demo)</h3>
@@ -268,7 +268,7 @@
       </ul>
     </div>
     <div class="p-6 border rounded-2xl shadow-soft">
-      <h3 class="font-semibold text-lg" data-i18n="sec_h3">Security & Compliance</h3>
+      <h3 class="font-semibold text-lg" data-i18n="sec_h3">Security &amp; Compliance</h3>
       <ul class="list-disc pl-6 text-gray-700 mt-2">
         <li data-i18n="sec_1">SSL/TLS everywhere</li>
         <li data-i18n="sec_2">3-D Secure via YXZ, tokenization</li>
@@ -288,9 +288,7 @@
     </label>
     <div class="grid grid-cols-2 gap-3 mt-3">
       <label>Months
-        <select id="months" class="border p-2 rounded w-full mt-1">
-          <option>12</option><option>9</option><option>6</option><option>3</option>
-        </select>
+        <select id="months" class="border p-2 rounded w-full mt-1"><option>12</option><option>9</option><option>6</option><option>3</option></select>
       </label>
       <label>Service fee (annual, %)
         <input id="fee" type="number" min="0" max="20" step="0.1" value="3.0" class="border p-2 rounded w-full mt-1">
@@ -392,7 +390,7 @@
     <div>
       <div class="flex items-center gap-2">
         <img src="./public/images/IMG_0014.jpeg" style="height:24px;width:auto" alt="BaySulu"/>
-        <span id="brand-logo-foot" class="font-extrabold text-[color:#16543C]">BaySulu</span>
+        <span id="brand-logo-foot" class="font-extrabold" style="color:#16543C">BaySulu</span>
       </div>
       <p class="text-gray-600 mt-2 text-sm">Demo prototype. © 2025</p>
     </div>
@@ -431,7 +429,7 @@
 
 <!-- ===== LOGIC ===== -->
 <script>
-/* i18n словари + баннер */
+/* i18n */
 const I18N={
   en:{nav_features:"Features",nav_how:"How it works",nav_listings:"Listings",nav_agents:"Agents",nav_pricing:"Pricing",nav_faq:"FAQ",nav_portals:"Portals",
       hero_h1:"Monthly rentals in Abu Dhabi & UAE",features_h2:"Why BaySulu",features_p:"Clear value for tenants, landlords, and agents.",
@@ -448,25 +446,23 @@ const I18N={
   ar:{nav_features:"المزايا",nav_how:"كيف يعمل",nav_listings:"العقارات",nav_agents:"للوكلاء",nav_pricing:"الأسعار",nav_faq:"الأسئلة الشائعة",nav_portals:"لوحات التحكم",
       hero_h1:"دفعات إيجار شهرية في أبوظبي والإمارات",features_h2:"لماذا باي سولو",features_p:"قيمة واضحة للمستأجرين والمالكين والوكلاء.",
       f1_badge:"خطة شهرية",f1_h3:"ادفع شهريًا بدل الشيكات",f1_p:"خصم تلقائي عبر YXZ؛ حماية 3-D Secure. لا نخزن بيانات البطاقات.",
-      f2_badge:"موثّق",f2_h3:"قوائم موثّقة ومراجعة",f2_p:"مراجعة يدوية في مرحلة MVP.",
+      f2_badge:"موثّق",f2_h3:"عقارات موثّقة ومراجعة",f2_p:"مراجعة يدوية في مرحلة MVP.",
       f3_badge:"تأمين",f3_h3:"تأمين الوديعة (اختياري)",f3_p:"عبر الشريك XYZ.",
       how_h2:"كيف يعمل",listings_h2:"عقارات مميزة",listings_p:"التقسيط متاح",listings_cta:"كن وكيلاً",
       portals_h2:"لوحات التحكم",agents_h2:"للوكلاء",agents_p:"أغلق المزيد من الصفقات بسرعة واحصل على عمولات.",
       agents_li1:"العمولة: ",agents_li2:"لوحة الوكيل + واتساب",agents_li3:"تدريب ودعم",
-      agent_demo_h3:"إضافة عقار (تجريبي)",pricing_h2:"الأسعار والأمان",pricing_fee_h3:"الرسوم (تجريبي)",
-      pricing_fee_1:"رسوم المنصة: ",pricing_fee_2:"المستأجر يرى المبلغ الشهري شامل الرسوم",pricing_fee_3:"عمولة الوكيل لكل صفقة",
+      agent_demo_h3:"إضافة عقار (تجريبي)",pricing_h2:"الأسعار والأمان",pricing_fee_h3:"الرسوم (تجريبي)",pricing_fee_1:"رسوم المنصة: ",pricing_fee_2:"المستأجر يرى المبلغ الشهري شامل الرسوم",pricing_fee_3:"عمولة الوكيل لكل صفقة",
       sec_h3:"الأمن والامتثال",sec_1:"SSL/TLS في كل مكان",sec_2:"3-D Secure وتوكن",sec_3:"لا نخزن بيانات البطاقات",sec_4:"مبادئ ADGM",
       register_h2:"إنشاء حساب (تجريبي)",fb_h2:"ملاحظات",ph_address:"العنوان",ph_price:"السعر (درهم)",no_listings:"لا توجد عقارات بعد"},
   ru:{nav_features:"Функции",nav_how:"Как это работает",nav_listings:"Объявления",nav_agents:"Агентам",nav_pricing:"Цены",nav_faq:"FAQ",nav_portals:"Порталы",
       hero_h1:"Помесячная аренда в Абу-Даби и ОАЭ",features_h2:"Почему BaySulu",features_p:"Понятная ценность для арендаторов, владельцев и агентов.",
-      f1_badge:"Помесячный план",f1_h3:"Платите помесячно вместо чеков",f1_p:"Автосписание YXZ; 3-D Secure; не храним данные карт.",
+      f1_badge:"Помесячный план",f1_h3:"Платите помесячно вместо чеков",f1_p:"Автосписание YXZ; 3-D Secure; данные карт не храним.",
       f2_badge:"Проверено",f2_h3:"Модерация объявлений",f2_p:"Ручная проверка на этапе MVP.",
-      f3_badge:"Страховка",f3_h3:"Страхование депозита (опция)",f3_p:"Партнер XYZ.",
+      f3_badge:"Страховка",f3_h3:"Страхование депозита (опция)",f3_p:"Партнёр XYZ.",
       how_h2:"Как это работает",listings_h2:"Избранные объявления",listings_p:"Доступна рассрочка",listings_cta:"Стать агентом",
       portals_h2:"Порталы",agents_h2:"Для агентов",agents_p:"Закрывайте сделки быстрее и зарабатывайте больше.",
       agents_li1:"Комиссия: ",agents_li2:"Панель агента + WhatsApp",agents_li3:"Обучение и поддержка",
-      agent_demo_h3:"Добавить объявление (демо)",pricing_h2:"Цены и безопасность",pricing_fee_h3:"Комиссии (демо)",
-      pricing_fee_1:"Комиссия платформы: ",pricing_fee_2:"Показываем месячную сумму с комиссиями",pricing_fee_3:"Агентам — комиссия за сделку",
+      agent_demo_h3:"Добавить объявление (демо)",pricing_h2:"Цены и безопасность",pricing_fee_h3:"Комиссии (демо)",pricing_fee_1:"Комиссия платформы: ",pricing_fee_2:"Показываем месячную сумму с комиссиями",pricing_fee_3:"Агентам — комиссия за сделку",
       sec_h3:"Безопасность и соответствие",sec_1:"SSL/TLS везде",sec_2:"3-D Secure и токенизация",sec_3:"Данные карт не храним",sec_4:"Принципы ADGM",
       register_h2:"Создать аккаунт (демо)",fb_h2:"Обратная связь",ph_address:"Адрес",ph_price:"Цена (AED)",no_listings:"Пока нет объявлений"},
   zh:{nav_features:"功能",nav_how:"工作原理",nav_listings:"房源",nav_agents:"经纪人",nav_pricing:"价格",nav_faq:"常见问题",nav_portals:"门户",
@@ -476,10 +472,9 @@ const I18N={
       f3_badge:"押金保险",f3_h3:"可选押金保险",f3_p:"XYZ 合作方。",
       how_h2:"工作原理",listings_h2:"精选房源",listings_p:"支持分期",listings_cta:"成为经纪人",
       portals_h2:"门户",agents_h2:"经纪人",agents_p:"更快成交，获得更多佣金。",
-      agents_li1:"佣金：",agents_li2:"经纪人面板 + WhatsApp",agents_li3:"培训与支持",
-      agent_demo_h3:"添加房源（演示）",pricing_h2:"价格与安全",pricing_fee_h3:"费用（演示）",
-      pricing_fee_1:"平台费：",pricing_fee_2:"月付金额含费用",pricing_fee_3:"经纪人佣金",sec_h3:"安全与合规",
-      sec_1:"全站 SSL/TLS",sec_2:"3-D Secure 与令牌化",sec_3:"不存储银行卡数据",sec_4:"ADGM 数据保护原则",
+      agents_li1:"佣金：",agents_li2:"经纪面板 + WhatsApp",agents_li3:"培训与支持",
+      agent_demo_h3:"添加房源（演示）",pricing_h2:"价格与安全",pricing_fee_h3:"费用（演示）",pricing_fee_1:"平台费：",pricing_fee_2:"月付金额含费用",pricing_fee_3:"经纪人佣金",
+      sec_h3:"安全与合规",sec_1:"全站 SSL/TLS",sec_2:"3-D Secure 与令牌化",sec_3:"不存储银行卡数据",sec_4:"ADGM 数据保护原则",
       register_h2:"创建账户（演示）",fb_h2:"反馈",ph_address:"地址",ph_price:"价格 (AED)",no_listings:"暂无房源"}
 };
 const BANNER_TEXT={
@@ -513,19 +508,19 @@ function setLocale(loc){
   const d=I18N[loc]||I18N.en;
   $$('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'); if(d[k]) el.textContent=d[k];});
   $$('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder'); if(d[k]) el.setAttribute('placeholder',d[k]);});
-  const tl=$('#tagline'); if(tl) tl.textContent=(loc==='ar'?TAG_AR:TAG_EN);
-  const b=$('.demo-banner'); if(b){ b.textContent=''; const s=document.createElement('span'); s.id='banner-i18n'; s.textContent=BANNER_TEXT[loc]||BANNER_TEXT.en; b.appendChild(s); }
-  ;['en','ar','ru','zh'].forEach(k=>$('#lang-'+k)?.classList.toggle('font-bold',k===loc));
+  const tl=document.getElementById('tagline'); if(tl) tl.textContent=(loc==='ar'?TAG_AR:TAG_EN);
+  const b=document.querySelector('.demo-banner'); if(b){ b.textContent=''; const s=document.createElement('span'); s.id='banner-i18n'; s.textContent=BANNER_TEXT[loc]||BANNER_TEXT.en; b.appendChild(s); }
+  ;['en','ar','ru','zh'].forEach(k=>document.getElementById('lang-'+k)?.classList.toggle('font-bold',k===loc));
 }
 
 function renderListings(){
   const grid=$('#listings-grid'); if(!grid) return;
-  const LISTINGS=[
+  const LS=[
     {t:"1BR — Al Reem Island",l:"Abu Dhabi",p:"AED 5,500/mo",img:"https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop"},
     {t:"Studio — Al Raha Beach",l:"Abu Dhabi",p:"AED 3,800/mo",img:"https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop"},
     {t:"3BR — Khalifa City A", l:"Abu Dhabi",p:"AED 9,500/mo",img:"https://images.unsplash.com/photo-1459535653751-d571815e906b?q=80&w=1200&auto=format&fit=crop"}
   ];
-  grid.innerHTML=LISTINGS.map(it=>`
+  grid.innerHTML=LS.map(it=>`
     <div class="border rounded-2xl overflow-hidden shadow-soft bg-white">
       <img src="${it.img}" alt="${it.t}" class="w-full h-40 object-cover">
       <div class="p-4">
@@ -566,7 +561,9 @@ function renderViewings(){
 }
 
 function runCalc(){
-  const r=parseFloat($('#rent')?.value)||0, m=parseInt($('#months')?.value)||12, f=parseFloat($('#fee')?.value)||3.0;
+  const r=parseFloat($('#rent')?.value)||0;
+  const m=parseInt($('#months')?.value)||12;
+  const f=parseFloat($('#fee')?.value)||3.0;
   const fee=r*(f/100), total=r+fee, monthly=(m>0?total/m:0);
   const out=$('#out'); if(out) out.innerHTML=`<b>Monthly (approx): AED ${fmt(monthly)}</b><br>Tenant pays total ~ AED ${fmt(total)} (${fmt(r)} rent + AED ${fmt(fee)} service).<br><small>Demo only. Rates/fees are illustrative.</small>`;
 }
@@ -587,22 +584,20 @@ function setupPopup(){
   const openBtn=$('#openTour'), modal=$('#agentTour'), dialog=$('#agentTourDialog'), closeBtn=$('#closeTour'), video=$('#agentVideo');
   if(!modal||!openBtn) return;
   const open=(e)=>{e.preventDefault(); modal.style.display='flex'; document.body.style.overflow='hidden';};
-  const close=()=>{modal.style.display='none'; document.body.style.overflow=''; try{video.pause();}catch(_){}};
+  const close=()=>{modal.style.display='none'; document.body.style.overflow=''; try{video.pause();}catch(e){}};
   openBtn.addEventListener('click',open); closeBtn.addEventListener('click',close);
   modal.addEventListener('click',e=>{ if(!dialog.contains(e.target)) close(); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&modal.style.display==='flex') close(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.style.display==='flex') close(); });
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
-  // brand + WA
   applyBrand();
 
   // dark mode
   const root=document.documentElement, btn=$('#themeToggle');
   if(localStorage.getItem('bs_theme')==='dark'){root.classList.add('dark')}
   const setLbl=()=>btn.textContent=root.classList.contains('dark')?'Light':'Dark';
-  btn.addEventListener('click',()=>{root.classList.toggle('dark'); localStorage.setItem('bs_theme',root.classList.contains('dark')?'dark':'light'); setLbl();});
-  setLbl();
+  btn.addEventListener('click',()=>{root.classList.toggle('dark'); localStorage.setItem('bs_theme',root.classList.contains('dark')?'dark':'light'); setLbl();}); setLbl();
 
   // i18n
   setLocale(S.locale);
@@ -672,17 +667,19 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 });
 
-/* iOS zoom sticky fix for FAB */
+/* iOS anti-zoom stickiness — только для Safari/iOS */
 (function(){
   const fab=document.getElementById('wa-fab');
-  if(!fab||!window.visualViewport) return;
+  const iOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
+  if(!fab || !iOS || !window.visualViewport) return;
   function place(){
     const vv=visualViewport, size=fab.offsetWidth||56, m=12;
     fab.style.left=(vv.pageLeft+vv.width-size-m)+'px';
     fab.style.top =(vv.pageTop +vv.height-size-m)+'px';
     fab.style.right='auto'; fab.style.bottom='auto';
   }
-  ['resize','scroll'].forEach(ev=>visualViewport.addEventListener(ev,place));
+  visualViewport.addEventListener('resize',place);
+  visualViewport.addEventListener('scroll',place);
   window.addEventListener('load',place,{once:true});
 })();
 </script>
