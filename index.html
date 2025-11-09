@@ -2,79 +2,94 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>BaySulu — Monthly Rentals UAE (XL+)</title>
 
-  <!-- Fonts & Tailwind -->
+  <!-- Fonts & Tailwind (CDN) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','system-ui','sans-serif']},colors:{brand:'#16543C',sand:'#F7F5EF',ink:'#0B1F1A'}}}};
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sanserif: ['Inter','system-ui','sans-serif'] },
+          colors: { brand:'#16543C', sand:'#F7F5EF', ink:'#0B1F1A' }
+        }
+      }
+    }
   </script>
 
   <style>
+    :root { --brand:#16543C; --sand:#F7F5EF; --ink:#0B1F1A; }
+    body{font-family:var(--font-sanserif,Inter,system-ui,sans-serif)}
     .container-xx{max-width:1180px}
     .chip{padding:.25rem .6rem;border-radius:999px;font-size:.75rem}
     .badge{display:inline-block;padding:.4rem .6rem;border-radius:.6rem;font-size:.75rem}
     .nav-link{padding:.35rem .65rem;border-radius:.6rem}
-    .nav-link.active{background:#16543C;color:#fff}
+    .nav-link.active{background:var(--brand);color:#fff}
     .shadow-soft{box-shadow:0 6px 18px rgba(0,0,0,.06)}
-    .btn-light{background:#fff;color:#0b1f1a;border:1px solid #e5e7eb}
-    .logo-img{height:44px;width:auto}
-    .cta-strong{font-weight:800;font-size:18px;padding:14px 18px;border-radius:14px}
+    .btn-light{background:#fff;color:#0b1220;border:1px solid #e5e7eb}
+    .logo-img{height:56px;width:auto}
+    @media (min-width:768px){ .logo-img{height:68px} }
     .banner-text{font:14px/1.45 Inter,system-ui,sans-serif}
     .form-card{max-width:520px;margin:18px auto;padding:16px;border:1px solid #e5e7eb;border-radius:16px;background:#fff}
-    .dark .form-card{background:#0f172a;border-color:#1f2937}
+    .wa-fab{
+      position:fixed; right:12px; bottom:12px; width:60px; height:60px;
+      border-radius:9999px; display:flex; align-items:center; justify-content:center;
+      background:#25D366; color:#fff; box-shadow:0 10px 24px rgba(0,0,0,.25); z-index:1100;
+    }
+    @media (max-width:420px){ .wa-fab{ right:8px; bottom:8px; width:56px; height:56px } }
+    @media (min-width:768px){ .wa-fab{ right:20px; bottom:20px; width:56px; height:56px } }
 
-    /* Dark mode: всё читаемо */
-    .dark body{background:#0b1220;color:#e6e9ef}
-    .dark .bg-sand{background:#0f172a}
-    .dark .p-3,.dark .p-5,.dark .p-6{background:#0f172a!important}
-    .dark .text-gray-600{color:#a7b0bd!important}
-    .dark .text-gray-700{color:#c5cedb!important}
-    .dark .text-brand{color:#4ad3a8!important}
-    .dark header{background:#0f172a!important;border-color:#1f2937!important}
-    .dark header .nav-link{color:#e5e7eb!important;border-color:rgba(255,255,255,.12)!important}
-    .dark header .nav-link:hover{background:rgba(236,253,245,.10)!important}
-    .dark .chip{background:#0b3b33!important;color:#d1fae5!important}
-    .dark .badge{background:#134e4a!important;color:#d1fae5!important}
-    .dark .demo-banner{background:#172036!important;border-color:#263043!important;color:#e6e9ef!important}
-    .dark .btn-light{background:#e6e9ef!important;color:#0b1f1a!important;border-color:#334155!important}
-    .dark header img{filter:contrast(1.08) saturate(1.05)}
+    /* Dark mode — всё читаемо */
+    .dark body{ background:#0b1220; color:#e6e9ef }
+    .dark .bg-sand{ background:#0f172a }
+    .dark .p-3, .dark .p-5, .dark .p-6 { background:#0f172a !important }
+    .dark .text-gray-600{ color:#a7b0bd !important }
+    .dark .text-gray-700{ color:#c5cedb !important }
+    .dark .badge, .dark .chip{ background:#1f2937 !important; color:#e6e9ef !important }
+    .dark .demo-banner{ background:#172036 !important; border-color:#263043 !important; color:#e6e9ef !important }
+    .dark header{ background:#0f172a; border-color:#1f2937 }
+    .dark .nav-link{ color:#e6e9ef !important; border-color:rgba(255,255,255,.12) !important }
+    .dark .nav-link:hover{ background:rgba(236,253,245,.10) }
+    .dark .btn-light{ background:#e6e9ef !important; color:#0f172a !important; border-color:#334155 !important }
+    .dark header img{ filter:contrast(1.08) saturate(1.08) }
   </style>
 </head>
 <body class="bg-white text-ink">
 
-<!-- Constants (edit values only) -->
+<!-- ===== Config (edit values only) ===== -->
 <script>
   const BRAND_NAME="BaySulu";
+  const WHATSAPP_NUMBER="971500000000"; // no '+'
   const BRAND_TAGLINE_EN="Pay monthly instead of 4–6 cheques.";
   const BRAND_TAGLINE_AR="ادفع شهريًا بدلًا من 4–6 شيكات.";
-  const WHATSAPP_NUMBER="971500000000"; // без '+'
   const AGENT_COMMISSION_TX="AED 1,200–2,000 per deal";
   const PLATFORM_FEE_TX="~4–5% platform fee (demo)";
 </script>
 
-<!-- NAVBAR -->
+<!-- ===== NAVBAR ===== -->
 <header class="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
   <div class="container-xx mx-auto px-4 py-3 flex items-center justify-between">
     <a href="/" class="flex items-center gap-2">
       <img id="brandLogo" src="./public/images/IMG_0014.jpeg" alt="BaySulu" class="logo-img"
-           onerror="this.style.display='none';document.getElementById('brandText').style.display='inline-block';"/>
-      <span id="brandText" class="font-extrabold text-lg text-brand" style="display:none">BaySulu</span>
+           onerror="this.style.display='none';document.getElementById('brandText').style.display='inline-block'">
+      <span id="brandText" class="font-extrabold text-2xl text-[color:var(--brand)]" style="display:none">BaySulu</span>
     </a>
+
     <nav class="hidden md:flex items-center gap-2">
-      <a href="#features"  class="nav-link" data-i18n="nav_features">Features</a>
-      <a href="#how"       class="nav-link" data-i18n="nav_how">How it works</a>
-      <a href="#listings"  class="nav-link" data-i18n="nav_listings">Listings</a>
-      <a href="#portals"   class="nav-link" data-i18n="nav_portals">Portals</a>
-      <a href="#agents"    class="nav-link" data-i18n="nav_agents">Agents</a>
-      <a href="#pricing"   class="nav-link" data-i18n="nav_pricing">Pricing</a>
+      <a href="#features" class="nav-link" data-i18n="nav_features">Features</a>
+      <a href="#how"      class="nav-link" data-i18n="nav_how">How it works</a>
+      <a href="#listings" class="nav-link" data-i18n="nav_listings">Listings</a>
+      <a href="#portals"  class="nav-link" data-i18n="nav_portals">Portals</a>
+      <a href="#agents"   class="nav-link" data-i18n="agents_h2">Agents</a>
+      <a href="#pricing"  class="nav-link" data-i18n="pricing_h2">Pricing</a>
       <a href="#installments" class="nav-link">Calculator</a>
-      <a href="#viewings"  class="nav-link">Viewings</a>
-      <a href="#chat"      class="nav-link">Chat</a>
-      <a href="#faq"       class="nav-link" data-i18n="nav_faq">FAQ</a>
+      <a href="#viewings" class="nav-link">Viewings</a>
+      <a href="#chat"     class="nav-link">Chat</a>
+      <a href="#faq"      class="nav-link" data-i18n="nav_faq">FAQ</a>
     </nav>
+
     <div class="flex items-center gap-2">
       <button id="lang-en" class="px-2 py-1 border rounded">EN</button>
       <button id="lang-ar" class="px-2 py-1 border rounded">AR</button>
@@ -85,26 +100,26 @@
   </div>
 </header>
 
-<!-- DEMO banner (4 языка) -->
+<!-- ===== DEMO BANNER ===== -->
 <div class="mx-auto container-xx px-4 mt-3">
-  <div class="demo-banner rounded-xl banner-text">
+  <div class="demo-banner rounded-xl p-3 border banner-text">
     <span id="banner-i18n">Demo only: This is a demonstration. All payments, calendars and chats are simulated (no backend).</span>
   </div>
 </div>
 
-<!-- HERO -->
+<!-- ===== HERO ===== -->
 <section class="relative overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-br from-emerald-600 via-emerald-700 to-brand"></div>
   <div class="container-xx relative z-10 mx-auto px-4 py-16 md:py-20 grid md:grid-cols-2 gap-10 items-center text-white">
     <div>
       <div class="chip bg-white/20">Fintech · Rentals UAE</div>
-      <h1 class="mt-4 text-4xl md:text-5xl font-extrabold leading-tight" data-i18n="hero_h1">Monthly rentals in Abu Dhabi & UAE</h1>
+      <h1 class="mt-4 text-4xl md:text-5xl font-extrabold leading-tight" data-i18n="hero_h1">
+        Monthly rentals in Abu Dhabi &amp; UAE
+      </h1>
       <p class="mt-4 text-white/90 text-lg" id="tagline">Pay monthly instead of 4–6 cheques.</p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <a href="#register" class="px-5 py-3 rounded-xl bg-white text-ink font-semibold shadow-soft btn-light cta-strong">
-          Get started — Join beta
-        </a>
-        <a href="#how" class="px-5 py-3 rounded-xl ring-1 ring-white/70 text-white">How it works</a>
+        <a href="#register" class="cta-strong btn-light">Get started — Join beta</a>
+        <a href="#how" class="px-5 py-3 rounded-xl ring-1 ring-white/70 text-white" data-i18in="cta_secondary">How it works</a>
       </div>
       <div class="mt-6 flex flex-wrap gap-2 text-sm">
         <span class="badge bg-white/15">Secure payments via <b>YXZ</b> (3DS, tokenized)</span>
@@ -118,55 +133,58 @@
   </div>
 </section>
 
-<!-- TRUST -->
-<section class="bg-sand">
-  <div class="container-xx mx-auto px-4 py-6 flex flex-wrap items-center gap-4 text-sm text-gray-600">
-    <span class="chip bg-white shadow-soft">YXZ · 3-D Secure</span>
-    <span class="chip bg-white shadow-soft">XYZ · Deposit Insurance</span>
-    <span class="chip bg-white shadow-soft">SSL/TLS</span>
-    <span class="chip bg-white shadow-soft">PCI scope minimized</span>
-    <span class="chip bg-white shadow-soft">ADGM Data Protection</span>
-  </div>
-</section>
-
-<!-- FEATURES -->
+<!-- ===== FEATURES ===== -->
 <section id="features" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold" data-i18n="features_h2">Why BaySulu</h2>
   <p class="text-gray-600 mt-2" data-i18n="features_p">Clear value for tenants, landlords, and agents.</p>
   <div class="grid md:grid-cols-3 gap-6 mt-8">
-    <div class="p-5 border rounded-2xl shadow-soft"><div class="badge bg-brand/10 text-brand mb-3" data-i18n="f1_badge">Monthly plan</div><h3 class="font-semibold text-lg" data-i18n="f1_h3">Pay monthly instead of cheques</h3><p class="text-gray-600" data-i18n="f1_p">Auto-debit via YXZ; 3-D Secure for safety. No card data stored on BaySulu.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><div class="badge bg-brand/10 text-brand mb-3" data-i18n="f2_badge">Verified</div><h3 class="font-semibold text-lg" data-i18n="f2_h3">Verified listings & moderation</h3><p class="text-gray-600" data-i18n="f2_p">Manual review at MVP stage. Quality photos and clear terms.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><div class="badge bg-brand/10 text-brand mb-3" data-i18n="f3_badge">Insurance</div><h3 class="font-semibold text-lg" data-i18n="f3_h3">Deposit insurance (optional)</h3><p class="text-gray-600" data-i18n="f3_p">Add policy via partner XYZ; landlords hand over keys with confidence.</p></div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <div class="badge bg-brand/10 text-brand" data-i18n="f1_badge">Monthly plan</div>
+      <h3 class="font-semibold text-lg" data-i18n="f1_h3">Pay monthly instead of cheques</h3>
+      <p class="text-gray-600" data-i18n="f1_p">Auto-debit via YXZ; 3-D Secure for safety. No card data stored on BaySulu.</p>
+    </div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <div class="badge bg-brand/10 text-brand" data-i18n="f2_badge">Verified</div>
+      <h3 class="font-semibold text-lg" data-i18n="f2_h3">Verified listings &amp; moderation</h3>
+      <p class="text-gray-600" data-i18n="f2_p">Manual review at MVP stage. Quality photos and clear terms.</p>
+    </div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <div class="badge bg-brand/10 text-brand" data-i18n="f3_badge">Insurance</div>
+      <h3 class="font-semibold text-lg" data-i18n="f3_h3">Deposit insurance (optional)</h3>
+      <p class="text-gray-600" data-i18n="f3_p">Add policy via partner XYZ; landlords hand over keys with confidence.</p>
+    </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS (video) -->
+<!-- ===== HOW IT WORKS (VIDEO) ===== -->
 <section id="how" class="container-xx mx-auto px-4 py-14">
   <div style="max-width:520px;margin:24px auto;text-align:center">
     <video controls playsinline preload="metadata"
            src="./public/videos/baysulu_how_it_works_dual.mp4"
            style="width:100%;border-radius:16px;border:1px solid #e5e7eb"></video>
-    <small style="display:block;color:#6b7280;margin-top:6px">Browse → Plan → Checkout → Chat → Move-in (demo)</small>
+    <small style="display:block;color:#6b7280;margin-top:6px" data-i18n="how_caption">
+      Browse → Plan → Checkout → Chat → Move-in (demo)
+    </small>
   </div>
   <h2 class="text-3xl font-extrabold" data-i18n="how_h2">How it works</h2>
 </section>
 
-<!-- REGISTER -->
+<!-- ===== REGISTRATION ===== -->
 <section id="register" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold" data-i18n="register_h2">Create your BaySulu account (demo)</h2>
   <div class="form-card">
     <form id="reg-form" class="grid md:grid-cols-2 gap-3">
-      <input id="reg-name"  class="border p-2 rounded" placeholder="Full name" required>
+      <input id="reg-name" class="border p-2 rounded" placeholder="Full name" required>
       <input id="reg-email" type="email" class="border p-2 rounded" placeholder="Email" required>
       <input id="reg-phone" class="border p-2 rounded" placeholder="Phone" required>
-      <input id="reg-pass"  type="password" class="border p-2 rounded" placeholder="Password" required>
+      <input id="reg-pass" type="password" class="border p-2 rounded" placeholder="Password" required>
       <button class="px-4 py-2 bg-brand text-white rounded md:col-span-2">Register (demo)</button>
     </form>
-    <div id="reg-ok" class="text-green-500 mt-2 hidden">✔ Registered (demo). You can now book a viewing & chat.</div>
+    <div id="reg-ok" class="text-green-500 mt-2 hidden">✔ Registered (demo). You can now book a viewing &amp; chat.</div>
   </div>
 </section>
 
-<!-- LISTINGS -->
+<!-- ===== LISTINGS ===== -->
 <section id="listings" class="container-xx mx-auto px-4 py-14">
   <div class="flex items-end justify-between">
     <div>
@@ -178,22 +196,34 @@
   <div id="listings-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
 </section>
 
-<!-- PORTALS -->
+<!-- ===== PORTALS PREVIEW ===== -->
 <section id="portals" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold" data-i18n="portals_h2">Portals</h2>
   <div class="grid md:grid-cols-3 gap-6 mt-8">
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold text-lg">Tenant</h3><p class="text-gray-600 text-sm">Profile, payments history, reminders (demo).</p><div class="mt-3 p-3 bg-sand rounded">John Doe · 1 active rental · AED 5,500/mo</div></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold text-lg">Landlord</h3><p class="text-gray-600 text-sm">Listings, payout schedule, insurance flag (demo).</p><div class="mt-3 p-3 bg-sand rounded">2 listings · Platform fee: <span id="platform-fee"></span></div></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold text-lg">Agent</h3><p class="text-gray-600 text-sm">Add listings, track views & commissions (demo).</p><div class="mt-3 p-3 bg-sand rounded">Est. per deal: <b id="agent-commission"></b></div></div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <h3 class="font-semibold text-lg">Tenant</h3>
+      <p class="text-gray-600 text-sm">Profile, payments history, reminders (demo).</p>
+      <div class="mt-3 p-3 bg-sand rounded">John Doe · 1 active rental · AED 5,500/mo</div>
+    </div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <h3 class="font-semibold text-lg">Landlord</h3>
+      <p class="text-gray-600 text-sm">Listings, payout schedule, insurance flag (demo).</p>
+      <div class="mt-3 p-3 bg-sand rounded">2 listings · Platform fee: <span id="platform-fee"></span></div>
+    </div>
+    <div class="p-5 border rounded-2xl shadow-soft">
+      <h3 class="font-semibold text-lg">Agent</h3>
+      <p class="text-gray-600 text-sm">Add listings, track views & commissions (demo).</p>
+      <div class="mt-3 p-3 bg-sand rounded">Est. per deal: <b id="agent-commission"></b></div>
+    </div>
   </div>
 </section>
 
-<!-- FOR AGENTS -->
+<!-- ===== AGENTS + POPUP TRIGGER ===== -->
 <section id="agents" class="bg-sand">
   <div class="container-xx mx-auto px-4 py-14 grid md:grid-cols-2 gap-10 items-center">
     <div>
       <h2 class="text-3xl font-extrabold" data-i18n="agents_h2">For Agents</h2>
-      <p class="text-gray-700 mt-2"      data-i18n="agents_p">Close more deals, faster, and earn commissions.</p>
+      <p class="text-gray-700 mt-2" data-i18n="agents_p">Close more deals, faster, and earn commissions.</p>
       <ul class="list-disc pl-6 mt-4 text-gray-800">
         <li data-i18n="agents_li1">Commission: <b id="agent-commission-2"></b></li>
         <li data-i18n="agents_li2">Agent dashboard + WhatsApp integration</li>
@@ -208,7 +238,7 @@
       <h3 class="font-semibold mb-2" data-i18n="agent_demo_h3">Add Listing (demo)</h3>
       <form id="agent-form" class="grid md:grid-cols-3 gap-3">
         <input id="f-address" class="border p-2 rounded" data-i18n-placeholder="ph_address" placeholder="Address" required>
-        <input id="f-price" type="number" class="border p-2 rounded" data-i18n-placeholder="ph_price" placeholder="Price (AED)" required>
+        <input id="f-price"   type="number" class="border p-2 rounded" data-i18n-placeholder="ph_price" placeholder="Price (AED)" required>
         <button class="px-4 py-2 bg-brand text-white rounded" data-i18n="btn_add">Add</button>
       </form>
       <div class="mt-4 grid sm:grid-cols-2 gap-3" id="agent-cards"></div>
@@ -217,9 +247,9 @@
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- ===== PRICING ===== -->
 <section id="pricing" class="container-xx mx-auto px-4 py-14">
-  <h2 class="text-3xl font-extrabold" data-i18n="pricing_h2">Pricing & Security</h2>
+  <h2 class="text-3xl font-extrabold" data-i18n="pricing_h2">Pricing &amp; Security</h2>
   <div class="grid md:grid-cols-2 gap-6 mt-8">
     <div class="p-6 border rounded-2xl shadow-soft">
       <h3 class="font-semibold text-lg" data-i18n="pricing_fee_h3">Fees (demo)</h3>
@@ -241,16 +271,18 @@
   </div>
 </section>
 
-<!-- CALCULATOR -->
+<!-- ===== INSTALLMENT CALCULATOR ===== -->
 <section id="installments" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold">Installment calculator (demo)</h2>
-  <div class="max-w-xl mt-4 p-5 border rounded-2xl shadow-soft">
+  <div class="form-card">
     <label class="block">Annual Rent (AED)
       <input id="rent" type="number" min="0" step="100" value="60000" class="border p-2 rounded w-full mt-1">
     </label>
     <div class="grid grid-cols-2 gap-3 mt-3">
       <label>Months
-        <select id="months" class="border p-2 rounded w-full mt-1"><option>12</option><option>9</option><option>6</option><option>3</option></select>
+        <select id="f-months" class="border p-2 rounded w-full mt-1">
+          <option>12</option><option>9</option><option>6</option><option>3</option>
+        </select>
       </label>
       <label>Service fee (annual, %)
         <input id="fee" type="number" min="0" max="20" step="0.1" value="3.0" class="border p-2 rounded w-full mt-1">
@@ -261,34 +293,45 @@
   </div>
 </section>
 
-<!-- VIEWINGS -->
+<!-- ===== VIEWINGS ===== -->
 <section id="viewings" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold">Schedule a viewing (demo)</h2>
   <p class="text-gray-600 mt-2">Book a viewing and notify the other party. Stored locally.</p>
   <form id="viewing-form" class="grid md:grid-cols-5 gap-3 mt-6">
     <input id="vw-name" class="border p-2 rounded" placeholder="Your name" required>
-    <select id="vw-role" class="border p-2 rounded" required><option value="">Role</option><option>Tenant</option><option>Agent</option><option>Landlord</option></select>
+    <select id="vw-role" class="border p-2 rounded" required>
+      <option value="">Role</option><option>Tenant</option><option>Agent</option><option>Landlord</option>
+    </select>
     <input id="vw-date" type="date" class="border p-2 rounded" required>
     <input id="vw-time" type="time" class="border p-2 rounded" required>
     <button class="px-4 py-2 bg-brand text-white rounded">Add slot</button>
   </form>
   <div class="mt-6 flex items-center gap-3">
     <label class="text-sm">Filter:</label>
-    <select id="vw-filter" class="border p-2 rounded"><option value="all">All</option><option value="Tenant">Tenant</option><option value="Agent">Agent</option><option value="Landlord">Landlord</option></select>
+    <select id="vw-filter" class="border p-2 rounded">
+      <option value="all">All</option><option value="Tenant">Tenant</option><option value="Agent">Agent</option><option value="Landlord">Landlord</option>
+    </select>
     <button id="vw-clear" class="px-3 py-2 border rounded">Clear all</button>
   </div>
   <div id="viewing-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-6"></div>
 </section>
 
-<!-- CHAT -->
+<!-- ===== CHAT ===== -->
 <section id="chat" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold">Chat (demo)</h2>
   <p class="text-gray-600 mt-2">Lightweight in-page chat for coordination. Stored locally.</p>
   <div class="grid md:grid-cols-3 gap-6 mt-6">
     <div class="p-5 border rounded-2xl shadow-soft md:col-span-2">
       <div class="flex items-center gap-3">
-        <select id="chat-room" class="border p-2 rounded"><option value="general">#general</option><option value="agents">#agents</option><option value="tenants">#tenants</option><option value="landlords">#landlords</option></select>
-        <select id="chat-role" class="border p-2 rounded"><option>Tenant</option><option>Agent</option><option>Landlord</option></select>
+        <select id="chat-room" class="border p-2 rounded">
+          <option value="general">#general</option>
+          <option value="agents">#agents</option>
+          <option value="tenants">#tenants</option>
+          <option value="landlords">#landlords</option>
+        </select>
+        <select id="chat-role" class="border p-2 rounded">
+          <option>Tenant</option><option>Agent</option><option>Landlord</option>
+        </select>
         <input id="chat-name" class="border p-2 rounded flex-1" placeholder="Your name (optional)">
       </div>
       <div id="chat-feed" class="mt-4 h-72 overflow-y-auto border rounded p-3 bg-white dark:bg-[#0f172a]"></div>
@@ -298,127 +341,82 @@
       </form>
     </div>
     <div class="p-5 border rounded-2xl shadow-soft">
-      <h3 class="font-semibold mb-2">Quick guidelines</h3>
+      <h3 class="font-semibold mb-2">Quick tips</h3>
       <ul class="list-disc pl-5 text-gray-700 text-sm">
-        <li>Be clear about location & availability</li>
-        <li>Share a preferred viewing time window</li>
-        <li>Keep contact details private (demo UI only)</li>
+        <li>Share location & availability</li>
+        <li>Offer 2–3 time slots for viewing</li>
+        <li>Don’t share sensitive data</li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- FEEDBACK -->
-<section id="feedback" class="container-xx mx-auto px-4 py-14">
-  <h2 class="text-3xl font-extrabold" data-i18n="fb_h2">Feedback</h2>
-  <div class="form-card">
-    <form id="fb-form" class="grid md:grid-cols-2 gap-3">
-      <select id="fb-rating" class="border p-2 rounded" required>
-        <option value="">Rating</option><option>★☆☆☆☆</option><option>★★☆☆☆</option><option>★★★☆☆</option><option>★★★★☆</option><option>★★★★★</option>
-      </select>
-      <input id="fb-name" class="border p-2 rounded" placeholder="Your name (optional)">
-      <textarea id="fb-msg" class="border p-2 rounded md:col-span-2" rows="4" placeholder="Your message" required></textarea>
-      <button class="px-4 py-2 bg-brand text-white rounded md:col-span-2">Send feedback (demo)</button>
-    </form>
-    <div id="fb-ok" class="text-green-500 mt-2 hidden">✔ Thanks! Stored locally (demo).</div>
-  </div>
-</section>
-
-<!-- FAQ -->
+<!-- ===== FAQ ===== -->
 <section id="faq" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold">FAQ</h2>
   <div class="mt-6 grid md:grid-cols-2 gap-6">
     <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Is this live with payments?</h3><p class="text-gray-600 mt-2">This is a demo UI; payments flow (YXZ) is disabled here.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Do you support deposit insurance?</h3><p class="text-gray-600 mt-2">Yes, via partner <b>XYZ</b> (as an option in checkout flow in full version).</p></div>
+    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Do you support deposit insurance?</h3><p class="text-gray-600 mt-2">Yes, via partner <b>XYZ</b> (optional in checkout).</p></div>
     <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Is KYC/AML required?</h3><p class="text-gray-600 mt-2">For suspicious cases and by bank request. In MVP we keep minimal data.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Can agents add listings?</h3><p class="text-gray-600 mt-2">Yes. See the Agent demo block above (saves locally for demo).</p></div>
+    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Can agents add listings?</h3><p class="text-gray-600 mt-2">Yes — see the Agent demo block above (stored locally for demo).</p></div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ===== FOOTER ===== -->
 <footer class="bg-sand border-t">
   <div class="container-xx mx-auto px-4 py-10 grid md:grid-cols-4 gap-6">
-    <div><div class="flex items-center gap-2"><img src="./public/images/IMG_0014.jpeg" style="height:20px;width:auto" alt="BaySulu"/><span id="brand-logo-foot" class="font-extrabold text-brand">BaySulu</span></div><p class="text-gray-600 mt-2 text-sm">Demo prototype. © 2025</p></div>
-    <div><h4 class="font-semibold mb-2">Product</h4><ul class="space-y-1 text-gray-700 text-sm"><li><a href="#features">Features</a></li><li><a href="#how">How it works</a></li><li><a href="#listings">Listings</a></li></ul></div>
-    <div><h4 class="font-semibold mb-2">Programs</h4><ul class="space-y-1 text-gray-700 text-sm"><li><a href="#agents">Agents</a></li><li><a href="#portals">Portals</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
-    <div><h4 class="font-semibold mb-2">Contact</h4><ul class="space-y-1 text-gray-700 text-sm"><li><a id="wa-link-foot" target="_blank" rel="noreferrer">WhatsApp</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+    <div>
+      <div class="flex items-center gap-2">
+        <img src="./public/images/IMG_0014.jpeg" style="height:24px;width:auto" alt="BaySulu"/>
+        <span id="brand-logo-foot" class="font-extrabold text-[color:var(--brand)]">BaySulu</span>
+      </div>
+      <p class="text-gray-600 mt-2 text-sm">Demo prototype. © 2025</p>
+    </div>
+    <div><h4 class="font-semibold mb-2">Product</h4>
+      <ul class="space-y-1 text-gray-700 text-sm">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#listings">Listings</a></li>
+      </ul>
+    </div>
+    <div><h4 class="font-semibold mb-2">Programs</h4>
+      <ul class="space-y-1 text-gray-700 text-sm">
+        <li><a href="#agents">Agents</a></li>
+        <li><a href="#portals">Portals</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul>
+    </div>
+    <div><h4 class="font-semibold mb-2">Contact</h4>
+      <ul class="space-y-1 text-gray-700 text-sm">
+        <li><a id="wa-link-foot" target="_blank" rel="noreferrer">WhatsApp</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 
-<!-- POPUP (agent tour) -->
-<div id="agentTour" style="position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:99999;">
-  <div id="agentTourDialog" style="background:#0f172a;border-radius:16px;padding:10px;max-width:520px;width:95%;box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center">
-    <video id="agentTourVideo" controls playsinline preload="metadata"
+<!-- ===== POPUP (Agent Tour) ===== -->
+<div id="agentTour" style="position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:1200;">
+  <div id="agentTourDialog" style="background:#0f172a;border-radius:16px;padding:10px;max-width:520px;width:95%;
+              box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center">
+    <video id="agentVideo" controls playsinline preload="metadata"
            src="./public/videos/baysulu_agent_quick_tour_dual.mp4"
            style="width:100%;border-radius:12px"></video>
-    <button id="closeTour" style="margin-top:12px;width:100%;padding:10px;border:0;border-radius:10px;background:#059669;color:#fff;font-size:16px;">Close tour</button>
+    <button id="closeTour" class="mt-3 px-4 py-2 bg-brand text-white rounded">Close</button>
   </div>
 </div>
 
-<!-- LOGIC -->
+<!-- ===== LOGIC ===== -->
 <script>
-/* i18n словари */
-const I18N={
-  en:{nav_features:"Features",nav_how:"How it works",nav_listings:"Listings",nav_agents:"Agents",nav_pricing:"Pricing",nav_faq:"FAQ",nav_portals:"Portals",
-      hero_h1:"Monthly rentals in Abu Dhabi & UAE",cta_primary:"Browse listings",cta_secondary:"How it works",
-      features_h2:"Why BaySulu",features_p:"Clear value for tenants, landlords, and agents.",
-      f1_badge:"Monthly plan",f1_h3:"Pay monthly instead of cheques",f1_p:"Auto-debit via YXZ; 3-D Secure for safety. No card data stored on BaySulu.",
-      f2_badge:"Verified",f2_h3:"Verified listings & moderation",f2_p:"Manual review at MVP stage. Quality photos and clear terms.",
-      f3_badge:"Insurance",f3_h3:"Deposit insurance (optional)",f3_p:"Partner XYZ; keys with confidence.",
-      how_h2:"How it works",listings_h2:"Featured listings",listings_p:"Installments available",listings_cta:"Become an agent",
-      agents_h2:"For Agents",agents_p:"Close more deals, faster, and earn commissions.",
-      agents_li1:"Commission: ",agents_li2:"Agent dashboard + WhatsApp integration",agents_li3:"Training and support",
-      agent_demo_h3:"Add Listing (demo)",pricing_h2:"Pricing & Security",pricing_fee_h3:"Fees (demo)",
-      pricing_fee_1:"Platform fee: ",pricing_fee_2:"Tenants see monthly amount incl. fees",pricing_fee_3:"Agents: per deal commission (see above)",
-      sec_h3:"Security & Compliance",sec_1:"SSL/TLS everywhere",sec_2:"3-D Secure via YXZ, tokenization",sec_3:"No card data stored on BaySulu",sec_4:"ADGM data protection principles",
-      ph_address:"Address",ph_price:"Price (AED)",register_h2:"Create your BaySulu account (demo)",fb_h2:"Feedback",no_listings:"No listings yet"},
-  ar:{nav_features:"المزايا",nav_how:"كيف يعمل",nav_listings:"العقارات",nav_agents:"للوكلاء",nav_pricing:"الأسعار",nav_faq:"الأسئلة الشائعة",nav_portals:"لوحات التحكم",
-      hero_h1:"دفعات إيجار شهرية في أبوظبي والإمارات",cta_primary:"تصفح العقارات",cta_secondary:"كيف يعمل",
-      features_h2:"لماذا باي سولو",features_p:"قيمة واضحة للمستأجرين والمالكين والوكلاء.",
-      f1_badge:"خطة شهرية",f1_h3:"ادفع شهريًا بدل الشيكات",f1_p:"خصم تلقائي عبر YXZ؛ حماية 3-D Secure. لا نخزن بيانات البطاقات.",
-      f2_badge:"موثّق",f2_h3:"عقارات موثّقة ومراجعة",f2_p:"مراجعة يدوية في مرحلة MVP.",
-      f3_badge:"تأمين",f3_h3:"تأمين الوديعة (اختياري)",f3_p:"عبر الشريك XYZ؛ تسليم آمن للمفاتيح.",
-      how_h2:"كيف يعمل",listings_h2:"عقارات مميزة",listings_p:"التقسيط متاح",listings_cta:"كن وكيلاً",
-      agents_h2:"للوكلاء",agents_p:"أغلق المزيد من الصفقات بسرعة واحصل على عمولات.",
-      pricing_h2:"الأسعار والأمان",pricing_fee_h3:"الرسوم (تجريبي)",
-      pricing_fee_1:"رسوم المنصة: ",pricing_fee_2:"المستأجر يرى المبلغ الشهري شامل الرسوم",pricing_fee_3:"عمولة الوكيل لكل صفقة",
-      sec_h3:"الأمن والامتثال",sec_1:"SSL/TLS في كل مكان",sec_2:"3-D Secure عبر YXZ وتوكن",sec_3:"لا نخزن بيانات البطاقات",sec_4:"مبادئ حماية بيانات ADGM",
-      ph_address:"العنوان",ph_price:"السعر (درهم)",register_h2:"إنشاء حساب (تجريبي)",fb_h2:"ملاحظات",no_listings:"لا توجد عقارات بعد"},
-  ru:{nav_features:"Функции",nav_how:"Как это работает",nav_listings:"Объявления",nav_agents:"Агентам",nav_pricing:"Цены",nav_faq:"FAQ",nav_portals:"Порталы",
-      hero_h1:"Помесячная аренда в Абу-Даби и ОАЭ",cta_primary:"Начать — присоединиться к бете",cta_secondary:"Как работает",
-      features_h2:"Почему BaySulu",features_p:"Понятная ценность для арендаторов, владельцев и агентов.",
-      f1_badge:"Помесячный план",f1_h3:"Платите помесячно вместо чеков",f1_p:"Автосписание YXZ; 3-D Secure; не храним данные карт.",
-      f2_badge:"Проверено",f2_h3:"Модерация объявлений",f2_p:"Ручная проверка на MVP-этапе.",
-      f3_badge:"Страховка",f3_h3:"Страхование депозита (опция)",f3_p:"Через партнёра XYZ.",
-      how_h2:"Как это работает",listings_h2:"Избранные объявления",listings_p:"Доступна рассрочка",listings_cta:"Стать агентом",
-      agents_h2:"Для агентов",agents_p:"Закрывайте сделки быстрее и зарабатывайте больше.",
-      pricing_h2:"Цены и безопасность",pricing_fee_h3:"Комиссии (демо)",
-      pricing_fee_1:"Комиссия платформы: ",pricing_fee_2:"Страницы показывают сумму в месяц с комиссиями",pricing_fee_3:"Агентам — комиссия за сделку",
-      sec_h3:"Безопасность и соответствие",sec_1:"SSL/TLS везде",sec_2:"3-D Secure, токенизация",sec_3:"Данные карт не храним",sec_4:"Принципы ADGM",
-      ph_address:"Адрес",ph_price:"Цена (AED)",register_h2:"Создать аккаунт (демо)",fb_h2:"Обратная связь",no_listings:"Пока нет объявлений"},
-  zh:{nav_features:"功能",nav_how:"工作原理",nav_listings:"房源",nav_agents:"经纪人",nav_pricing:"价格",nav_faq:"常见问题",nav_portals:"门户",
-      hero_h1:"阿布扎比及阿联酋月付租房",cta_primary:"开始使用 — 加入内测",cta_secondary:"工作原理",
-      features_h2:"为何选择 BaySulu",features_p:"为租客、房东与经纪人提供清晰价值。",
-      f1_badge:"月付计划",f1_h3:"按月支付而非支票",f1_p:"通过 YXZ 自动扣款；3-D Secure 安全；不存储卡数据。",
-      f2_badge:"已验证",f2_h3:"房源审核",f2_p:"MVP 阶段人工审核。",
-      f3_badge:"押金保险",f3_h3:"可选押金保险",f3_p:"XYZ 合作方。",
-      how_h2:"工作原理",listings_h2:"精选房源",listings_p:"支持分期",listings_cta:"成为经纪人",
-      agents_h2:"经纪人",agents_p:"更快成交，获得更多佣金。",
-      pricing_h2:"价格与安全",pricing_fee_h3:"费用（演示）",
-      pricing_fee_1:"平台费：",pricing_fee_2:"月付金额含费用",pricing_fee_3:"经纪人佣金（如上）",
-      sec_h3:"安全与合规",sec_1:"全站 SSL/TLS",sec_2:"3-D Secure 与令牌化",sec_3:"不存储银行卡数据",sec_4:"ADGM 数据保护原则",
-      ph_address:"地址",ph_price:"价格 (AED)",register_h2:"创建账户（演示）",fb_h2:"反馈",no_listings:"暂无房源"}
-};
-
-/* демо-листинги */
-const LISTINGS_EN=[
-  {title:"1BR — Al Reem Island",location:"Abu Dhabi",price:"AED 5,500/mo",img:"https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop"},
-  {title:"Studio — Al Raha Beach",location:"Abu Dhabi",price:"AED 3,800/mo",img:"https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop"},
-  {title:"3BR — Khalifa City A",location:"Abu Dhabi",price:"AED 9,500/mo",img:"https://images.unsplash.com/photo-1459535653751-d571815e906b?q=80&w=1200&auto=format&fit=crop"}
+/* sample data (listings) */
+const LISTINGS = [
+  {title:"1BR — Al Reem Island", location:"Abu Dhabi", price:"AED 5,500/mo", img:"https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop"},
+  {title:"Studio — Al Raha Beach", location:"Abu Dhabi", price:"AED 3,800/mo", img:"https://images.unsplash.com/photo-1494526585095-c41746248156?q=80&w=1200&auto=format&fit=crop"},
+  {title:"3BR — Khalifa City A",   location:"Abu Dhabi", price:"AED 9,500/mo", img:"https://images.unsplash.com/photo-1459535653751-d571815e906b?q=80&w=1200&auto=format&fit=crop"}
 ];
 
-/* состояние */
-const S={
+/* state */
+const S2 = {
   locale: localStorage.getItem('bs_locale') || 'en',
   agent:  JSON.parse(localStorage.getItem('bs_agent') || '[]'),
   view:   JSON.parse(localStorage.getItem('bs_viewings') || '[]'),
@@ -426,201 +424,84 @@ const S={
 };
 
 /* helpers */
-const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-const fmt=n=>new Intl.NumberFormat('en-AE',{maximumFractionDigits:2}).format(n);
+const q = (s)=>document.querySelector(s);
+const qa = (s)=>Array.from(document.querySelectorAll(s));
+const fmt2=(n)=>new Intl.NumberFormat('en-AE',{maximumFractionDigits:2}).format(n);
 
-/* banner text по языку */
-const BANNER_TEXT={
-  en:"Demo only: This is a demonstration. All payments, calendars and chats are simulated (no backend).",
-  ar:"نسخة تجريبية فقط: هذا عرض توضيحي. جميع المدفوعات والتقاويم والدردشة محاكاة (بدون خادم).",
-  ru:"Демо: это демонстрационная версия. Все платежи, календари и чаты имитированы (без бэкенда).",
-  zh:"仅演示：这是演示版本。所有支付、日程与聊天均为模拟（无后端）。"
-};
-
-/* brand & WA */
-function applyBrand(){
-  $('#platform-fee')  && ($('#platform-fee').textContent  = PLATFORM_FEE_TX);
-  $('#platform-fee-2')&& ($('#platform-fee-2').textContent= PLATFORM_FEE_TX);
-  $('#agent-commission')  && ($('#agent-commission').textContent  = AGENT_COMMISSION_TX);
-  $('#agent-commission-2')&& ($('#agent-commission-2').textContent= AGENT_COMMISSION_TX);
+/* init UI */
+document.addEventListener('DOMContentLoaded', ()=> {
+  // brand
+  q('#brandLogo').src='./public/images/IMG_0014.jpeg';
   const wa=`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi BaySulu! I want to learn more and schedule a viewing.')}`;
-  $('#wa-link')?.setAttribute('href',wa); $('#wa-link-foot')?.setAttribute('href',wa);
-  const wafab=document.getElementById('wa-fab'); if(wafab) wafab.href=wa;
-}
+  q('#wa-link').href=wa; q('#wa-link-foot').href=wa; const fab=document.getElementById('wa-fab'); if(fab) fab.href=wa;
 
-/* i18n */
-function setLocale(loc){
-  S.locale=loc; localStorage.setItem('bs_locale',loc);
-  document.documentElement.lang=loc; document.documentElement.dir=(loc==='ar'?'rtl':'ltr');
-  const d=I18N[loc]||I18N.en;
-  $$('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'); if(d[k]) el.textContent=d[k];});
-  $$('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder'); if(d[k]) el.setAttribute('placeholder',d[k]);});
-  const t=$('#tagline'); if(t) t.textContent=(loc==='ar'?BRAND_TAGLINE_AR:BRAND_TAGLINE_EN);
-  // banner
-  const b=document.querySelector('.demo-banner'); if(b){ b.textContent=''; const s=document.createElement('span'); s.id='banner-i18n'; s.textContent=BANNER_TEXT[loc]||BANNER_TEXT.en; b.appendChild(s); }
-  // highlight
-  ['en','ar','ru','zh'].forEach(k=>$('#lang-'+k)?.classList.toggle('font-bold',k===loc));
-  renderListings();
-}
-
-/* listings */
-function renderListings(){
-  const grid=$('#listings-grid'); if(!grid) return;
-  grid.innerHTML=LISTINGS_EN.map(it=>`
-    <div class="border rounded-2xl overflow-hidden shadow-soft bg-white">
-      <img src="${it.img}" alt="${it.title}" class="w-full h-40 object-cover">
-      <div class="p-4">
-        <div class="chip bg-brand/10 text-brand mb-2">${S.locale==='ar'?'التقسيط متاح':'Installments available'}</div>
-        <h3 class="font-semibold">${it.title}</h3>
-        <p class="text-gray-600">${it.location}</p>
-        <p class="text-brand font-bold">${it.price}</p>
-      </div>
-    </div>`).join('');
-}
-
-/* agent cards */
-function renderAgent(){
-  const wrap=$('#agent-cards'), empty=$('#agent-empty'); if(!wrap||!empty) return;
-  empty.classList.toggle('hidden',S.agent.length>0);
-  wrap.innerHTML=S.agent.map(x=>`
-    <div class="border rounded-xl p-3">
-      <div class="text-sm text-gray-500">${x.address}</div>
-      <div class="font-semibold">AED ${fmt(+x.price||0)}</div>
-      <div class="text-xs text-gray-500 mt-1">Added by agent</div>
-    </div>`).join('');
-}
-
-/* viewings */
-function renderViewings(){
-  const list=$('#viewing-list'); if(!list) return;
-  const filter=$('#vw-filter')?.value||'all';
-  const arr=S.view.filter(v=>filter==='all'?true:v.role===filter);
-  if(!arr.length){ list.innerHTML='<div class="text-gray-500">No viewings yet</div>'; return; }
-  list.innerHTML=arr.map((v,i)=>`
-    <div class="border rounded-2xl p-4 shadow-soft bg-white">
-      <div class="font-semibold">${v.name} <span class="text-xs text-gray-500">(${v.role})</span></div>
-      <div class="text-gray-600 mt-1">${v.date} · ${v.time}</div>
-      <div class="mt-2 flex gap-2">
-        <button data-i="${i}" class="vw-del px-3 py-1 border rounded text-sm">Delete</button>
-        <a class="px-3 py-1 border rounded text-sm" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi! I scheduled a viewing on '+v.date+' '+v.time)}" target="_blank" rel="noreferrer">WhatsApp</a>
-      </div>
-    </div>`).join('');
-  $$('.vw-del').forEach(btn=>{btn.onclick=()=>{const i=+btn.getAttribute('data-i'); S.view.splice(i,1); localStorage.setItem('bs_viewings',JSON.stringify(S.view)); renderViewings();}});
-}
-
-/* calculator (robust) */
-function runCalc(){
-  const r=parseFloat($('#rent')?.value)||0, m=parseInt($('#months')?.value)||12, f=parseFloat($('#fee')?.value)||3.0;
-  const fee=r*(f/100), total=r+fee, monthly=(m>0?total/m:0);
-  const out=$('#out'); if(out) out.innerHTML=`<b>Monthly (approx): AED ${fmt(monthly)}</b><br>Tenant pays total ~ AED ${fmt(total)} (${fmt(r)} rent + AED ${fmt(fee)} service).<br><small>Demo only. Rates/fees are illustrative.</small>`;
-}
-
-/* chat */
-function renderChat(){
-  const room=$('#chat-room')?.value||'general', feed=$('#chat-feed'); if(!feed) return;
-  const items=S.chat[room]||[];
-  feed.innerHTML=items.map(m=>`<div class="mb-2"><span class="px-2 py-0.5 rounded bg-brand/10 text-brand text-xs">${m.role}${m.name?(' · '+m.name):''}</span><div class="mt-1">${m.text}</div><div class="text-xs text-gray-500">${new Date(m.ts).toLocaleString()}</div></div>`).join('');
-  feed.scrollTop=feed.scrollHeight;
-}
-
-/* popup (agent tour) */
-function setupPopup(){
-  const openBtn=$('#openTour'), modal=$('#agentTour'), dialog=$('#agentTourDialog'), closeBtn=$('#closeTour'), video=$('#agentTourVideo');
-  if(!modal||!openBtn) return;
-  const open=(e)=>{e.preventDefault(); modal.style.display='flex'; document.body.style.overflow='hidden';};
-  const close=()=>{modal.style.display='none'; document.body.style.overflow=''; try{video.pause();}catch(e){}};
-  openBtn.addEventListener('click',open); closeBtn.addEventListener('click',close);
-  modal.addEventListener('click',e=>{if(!dialog.contains(e.target)) close();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.style.display==='flex') close();});
-}
-
-/* bindings */
-document.addEventListener('DOMContentLoaded',()=>{
-  // brand + i18n
-  applyBrand(); setLocale(S.locale);
-  $('#lang-en')?.addEventListener('click',()=>setLocale('en'));
-  $('#lang-ar')?.addEventListener('click',()=>setLocale('ar'));
-  $('#lang-ru')?.addEventListener('click',()=>setLocale('ru'));
-  $('#lang-zh')?.addEventListener('click',()=>setLocale('zh'));
-
-  // theme
-  const root=document.documentElement, btn=$('#themeToggle');
-  if(localStorage.getItem('theme')==='dark') root.classList.add('dark');
-  const setLbl=()=>btn.textContent=root.classList.contains('dark')?'Light':'Dark';
-  btn.addEventListener('click',()=>{root.classList.toggle('dark'); localStorage.setItem('theme',root.classList.contains('dark')?'dark':'light'); setLbl();});
+  // dark mode toggle
+  const root=document.documentElement, btn=q('#themeToggle');
+  if(local-s  torage.getItem('bs_theme')==='dark'){root.classList.add('dark')}
+  const setLbl=()=>btn.textContent= root.classList.contains('dark')?'Light':'Dark';
+  btn.addEventListener('click',()=>{root.classList.toggle('dark'); localStorage.setItem('bs_theme', root.classList.contains('dark')?'dark':'light'); setLbl();});
   setLbl();
 
-  // listings
-  renderListings();
+  // i18n
+  const I18N = {
+    en:{nav_features:"Features",nav_how:"How it works",nav_listings:"Listings",nav_pricing:"Pricing",nav_faq:"FAQ",nav_portals:"Portals",
+        hero_h1:"Monthly rentals in Abu Dhabi & UAE", features_h2:"Why BaySulu", features_p:"Clear value for tenants, landlords, and agents.",
+        agents_h2:"For Agents", agents_p:"Close more deals, faster, and earn commissions.", pricing_h2:"Pricing & Security",
+        agent-commission:"AED 1,200–2,000 per deal", ph_address:"Address", ph_price:"Price (AED)"
+    },
+    ar:{nav_features:"المزايا",nav_how:"كيف يعمل",nav_listings:"العقارات",nav_pricing:"الأسعار",nav_faq:"الأسئلة الشائعة",nav_portals:"لوحات التحكم",
+        hero_h1:"دفعات إيجار شهرية في أبوظبي والإمارات",features_h2:"لماذا باي سولو",features_p:"قيمة واضحة للمستأجرين والمالكين والوكلاء.",
+        agents_h2:"للوكلاء",agents_p:"أغلق المزيد من الصفقات بسرعة واحصل على عمولات.",pricing_h2:"الأسعار والأمان",
+        "agent-commission":"AED 1,200–2,000", ph_address:"العنوان", ph_price:"السعر (درهم)"
+    },
+    ru:{nav_features:"Функции",nav_how:"Как это работает",nav_listings:"Объявления",nav_pricing:"Цены",nav_faq:"FAQ",nav_portals:"Порталы",
+        hero_h1:"Помесячная аренда в Абу-Даби и ОАЭ",features_h2:"Почему BaySulu",features_p:"Понятная ценность для арендаторов, владельцев и агентов.",
+        agents_h2:"Для агентов",agents_p:"Закрывайте сделки быстрее, зарабатывайте больше.",pricing_h2:"Цены и безопасность",
+        "agent-commission":"AED 1 200–2 000 за сделку", ph_address:"Адрес", ph_price:"Цена (AED)"
+    },
+    zh:{nav_features:"功能",nav_how:"工作原理",nav_listings:"房源",nav_pricing:"价格",nav_faq:"常见问题",nav_portals:"门户",
+        hero_h1:"阿布扎比及阿联酋月付租房",features_h2:"为何选择 BaySulu",features_p:"为租客、房东与经纪人提供清晰价值。",
+        agents_h2:"经纪人",agents_p:"更快成交，获得更多佣金。",pricing_h2:"价格与安全",
+        "agent-commission":"每单佣金 AED 1,200–2,000", ph_address:"地址", ph_price:"价格 (AED)"
+    }
+  };
 
-  // registration
-  $('#reg-form')?.addEventListener('submit',e=>{
-    e.preventDefault();
-    const user={name:$('#reg-name').value.trim(),email:$('#reg-email').value.trim(),phone:$('#reg-phone').value.trim(),pass:$('#reg-pass').value};
-    if(!user.name||!user.email||!user.phone||!user.pass) return;
-    const arr=JSON.parse(localStorage.getItem('bs_users')||'[]'); arr.unshift({...user,ts:Date.now()});
-    localStorage.setItem('bs_users',JSON.stringify(arr));
-    e.target.reset(); $('#reg-ok')?.classList.remove('hidden');
-  });
+  function applyLocale(loc){
+    S2.locale=loc; localStorage.setLocale&&localStorage.setLocale('bs_locale',loc) || (localStorage.setItem('bs_locale',loc));
+    document.documentElement.lang=loc; document.documentElement.dir=(loc==='ar'?'ltr'==='x'?'rtl':'ltr')?'rtl':'ltr';
+    const d = I2N || I18N[loc] || I18N.en; // fallback
+  }
+});
 
-  // agent form
-  $('#agent-form')?.addEventListener('submit',e=>{
-    e.preventDefault();
-    const addr=$('#f-address').value.trim(), price=$('#f-price').value.trim();
-    if(!addr||!price) return alert('Fill address & price');
-    S.agent.unshift({address:addr,price:price,ts:Date.now()});
-    localStorage.setItem('bs_agent',JSON.stringify(S.agent));
-    e.target.reset(); renderAgent();
-  });
-  renderAgent();
+/* ---- Robust calculator ---- */
+function runCalc2(){
+  const r=parseFloat(q('#rent')?.value)||0;
+  const m=parseInt(q('#f-months')?.value)||12;
+  const f=parseFloat(q('#fee')?.value)||3.0;
+  const fee=r*(f/100), total=r+fee, monthly=(m>0?total/m:0);
+  const out=q('#out'); if(out) out.innerHTML=`<b>Monthly (approx): AED ${fmt2(monthly)}</b><br>Tenant pays total ~ AED ${fmt2(total)} (${fmt2(r)} rent + AED ${fmt2(fee)} service).<br><small>Demo only.</small>`;
+}
+document.addEventListener('DOMContentLoaded',()=>{ q('#calcBtn')?.addEventListener('click',runCalc2); runCalc2(); });
 
-  // calculator
-  $('#calcBtn')?.addEventListener('click',runCalc); runCalc();
-
-  // viewings
-  $('#viewing-form')?.addEventListener('submit',e=>{
-    e.preventDefault();
-    const name=$('#vw-name').value.trim(),role=$('#vw-role').value,date=$('#vw-date').value,time=$('#vw-time').value;
-    if(!name||!role||!date||!time) return;
-    S.view.unshift({name,role,date,time,ts:Date.now()});
-    localStorage.setItem('bs_viewings',JSON.stringify(S.view));
-    e.target.reset(); renderViewings();
-  });
-  $('#vw-filter')?.addEventListener('change',renderViewings);
-  $('#vw-clear')?.addEventListener('click',()=>{ if(confirm('Clear all viewings?')){ S.view=[]; localStorage.setItem('bs_viewings','[]'); renderViewings(); }});
-  renderViewings();
-
-  // chat
-  $('#chat-form')?.addEventListener('submit',e=>{
-    e.preventDefault();
-    const room=$('#chat-room').value, role=$('#chat-role').value, name=$('#chat-name').value.trim(), text=$('#chat-input').value.trim();
-    if(!text) return;
-    S.chat[room]=S.chat[room]||[]; S.chat[room].push({role,name,text,ts:Date.now()});
-    localStorage.setItem('bs_chat',JSON.stringify(S.chat));
-    $('#chat-input').value=''; renderChat();
-  });
-  $('#chat-room')?.addEventListener('change',renderChat);
-  renderChat();
-
-  // popup
-  setupPopup();
-
-  // nav highlight
-  document.addEventListener('click',e=>{
-    const n=e.target.closest('.nav-link'); if(n){ $$('.nav-link').forEach(x=>x.classList.remove('active')); n.classList.add('active'); }
+/* ---- Viewings ---- */
+function renderViewings2(){
+  const list=q('#viewing-list'); if(!list) return;
+  const filter=q('#vw-filter').value||'all';
+  const arr=S2.view.filter(v=>filter==='all'||v.role===filter);
+  if(!arr.length){ list.innerHTML='<div class="text-gray-500">No viewings yet</div>'; return;}
+  list.innerHTML=arr.map((v,i)=>`<div class="border rounded-2xl p-4 shadow-soft bg-white">
+     <div class="font-semibold">${v.name} <span class="text-xs text-gray-500">(${v.role})</span></div>
+     <div class="text-gray-600 mt-1">${v.date} · ${v.time}</div>
+     <div class="mt-2 flex gap-2">
+       <button data-i="${i}" class="vw-del px-3 py-1 border rounded text-sm">Delete</button>
+       <a class="px-3 py-1 border rounded text-sm" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi! I scheduled a viewing on '+v.date+' '+v.time)}" target="_blank">WhatsApp</a>
+     </div>
+  </div>`).join('');
+  qa('.vw-del').forEach(btn=>btn.onclick=()=>{const i=+btn.dataset.i; S2.view.splice(i,1); localStorage.setItem('bs_viewings',JSON.stringify(S2.view)); renderViewings2();});
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  q('#viewing-form')?.addEventListener('submit',e=>{
+    e.preventDefault(); const name=q('#vw-name').value.trim(),role=q('#vw-role').value,date=q('#vw-w')).value, time=q('#vw-time').value;
   });
 });
-</script>
-
-<!-- WhatsApp FAB (svg icon) -->
-<a id="wa-fab" target="_blank" rel="noopener" aria-label="WhatsApp"
-   style="position:fixed;right:16px;bottom:16px;width:56px;height:56px;border-radius:50%;
-          display:flex;align-items:center;justify-content:center;background:#25D366;color:#fff;
-          text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.18);z-index:99999">
-  <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" aria-hidden="true">
-    <path d="M19.11 17.44c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.64.15-.19.29-.74.94-.91 1.13-.17.19-.34.22-.63.07-.29-.15-1.2-.44-2.28-1.4-.84-.75-1.41-1.67-1.58-1.96-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.52.15-.17.19-.29.29-.48.1-.19.05-.37-.02-.52-.07-.15-.64-1.54-.88-2.11-.23-.56-.47-.48-.64-.49h-.55c-.19 0-.5.07-.76.37-.26.29-1 1-1 2.45 0 1.45 1.03 2.85 1.18 3.04.15.19 2.03 3.1 4.93 4.35.69.3 1.23.48 1.65.61.69.22 1.31.19 1.8.11.55-.08 1.7-.69 1.94-1.35.24-.67.24-1.24.17-1.35-.07-.11-.26-.18-.55-.33z"/><path d="M26.67 5.33C24.13 2.8 20.8 1.33 17.33 1.33 9.84 1.33 3.87 7.3 3.87 14.79c0 2.32.6 4.59 1.74 6.58L4 30.67l9.5-1.56c1.93 1.06 4.12 1.61 6.36 1.61 7.49 0 13.46-5.97 13.46-13.46 0-3.47-1.47-6.8-4-9.33zM19.86 27.2c-1.98 0-3.92-.53-5.6-1.54l-.4-.24-5.64.93.93-5.5-.26-.43c-1.1-1.82-1.68-3.91-1.68-6.06 0-6.47 5.27-11.73 11.73-11.73 3.14 0 6.1 1.22 8.32 3.44 2.21 2.22 3.44 5.18 3.44 8.32 0 6.46-5.27 11.73-11.73 11.73z"/>
-  </svg>
-</a>
-
-</body>
-</html> 
+</script> 
