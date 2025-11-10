@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8"/>
@@ -26,19 +26,31 @@
     .form-card{max-width:520px;margin:18px auto;padding:16px;border:1px solid #e5e7eb;border-radius:16px;background:#fff}
     .dark .form-card{background:#0f172a;border-color:#1f2937}
 
-    /* WhatsApp FAB — фикс + не «уплывает» */
+    /* WhatsApp FAB — фикс + iOS-safe */
     .wa-fab{
       position:fixed; inset:auto; right:12px; bottom:12px;
       width:60px;height:60px;border-radius:9999px;display:flex;align-items:center;justify-content:center;
       background:#25D366;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.25);z-index:99999;
       transform:translateZ(0); -webkit-transform:translateZ(0); touch-action:manipulation;
     }
-    .wa-fab{right:max(12px, env(safe-area-inset-right)); bottom:max(12px, env(safe-area-inset-bottom))}
+    .wa-fab{ right:max(12px, env(safe-area-inset-right)); bottom:max(12px, env(safe-area-inset-bottom)) }
     @supports (bottom: constant(safe-area-inset-bottom)){
       .wa-fab{ right:max(12px, constant(safe-area-inset-right)); bottom:max(12px, constant(safe-area-inset-bottom)) }
     }
     @media (max-width:420px){ .wa-fab{width:56px;height:56px} }
     @media (min-width:768px){ .wa-fab{right:20px;bottom:20px;width:56px;height:56px} }
+
+    /* AI Assistant */
+    .ai-panel{position:fixed;right:12px;bottom:88px;width:min(90vw,360px);max-height:70vh;display:none;flex-direction:column;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 10px 24px rgba(0,0,0,.15);z-index:99990}
+    .dark .ai-panel{background:#0f172a;border-color:#1f2937}
+    .ai-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #e5e7eb}
+    .dark .ai-head{border-color:#1f2937}
+    .ai-feed{padding:10px 12px;overflow:auto;flex:1}
+    .ai-form{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #e5e7eb}
+    .dark .ai-form{border-color:#1f2937}
+    .ai-msg{margin:6px 0}
+    .ai-user{color:#0b1220}.dark .ai-user{color:#e6e9ef}
+    .ai-bot{color:#0b7a59}.dark .ai-bot{color:#4ad3a8}
 
     /* Dark mode — всё читаемо */
     .dark body{background:#0b1220;color:#e6e9ef}
@@ -113,9 +125,7 @@
       <h1 class="mt-4 text-4xl md:text-5xl font-extrabold leading-tight" data-i18n="hero_h1">Monthly rentals in Abu Dhabi &amp; UAE</h1>
       <p class="mt-4 text-white/90 text-lg" id="tagline">Pay monthly instead of 4–6 cheques.</p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <a href="#register" class="btn-light font-extrabold text-[18px] px-5 py-3 rounded-xl shadow-soft">
-          Get started — Join beta
-        </a>
+        <a href="#register" class="btn-light font-extrabold text-[18px] px-5 py-3 rounded-xl shadow-soft">Get started — Join beta</a>
         <a href="#how" class="px-5 py-3 rounded-xl ring-1 ring-white/70 text-white" data-i18n="cta_secondary">How it works</a>
       </div>
       <div class="mt-6 flex flex-wrap gap-2 text-sm">
@@ -170,9 +180,7 @@
     <video controls playsinline preload="metadata"
            src="./public/videos/baysulu_how_it_works_dual.mp4"
            style="width:100%;border-radius:16px;border:1px solid #e5e7eb"></video>
-    <small style="display:block;color:#6b7280;margin-top:6px">
-      Browse → Plan → Checkout → Chat → Move-in (demo)
-    </small>
+    <small style="display:block;color:#6b7280;margin-top:6px">Browse → Plan → Checkout → Chat → Move-in (demo)</small>
   </div>
   <h2 class="text-3xl font-extrabold" data-i18n="how_h2">How it works</h2>
 </section>
@@ -185,7 +193,7 @@
       <input id="reg-name" class="border p-2 rounded" placeholder="Full name" required>
       <input id="reg-email" type="email" class="border p-2 rounded" placeholder="Email" required>
       <input id="reg-phone" class="border p-2 rounded" placeholder="Phone" required>
-      <input id="reg-pass" type="password" class="border p-2 rounded" placeholder="Password" required>
+      <input id="reg-pass"  type="password" class="border p-2 rounded" placeholder="Password" required>
       <button class="px-4 py-2 bg-brand text-white rounded md:col-span-2">Register (demo)</button>
     </form>
     <div id="reg-ok" class="text-green-500 mt-2 hidden">✔ Registered (demo). You can now book a viewing &amp; chat.</div>
@@ -204,7 +212,7 @@
   <div id="listings-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"></div>
 </section>
 
-<!-- ===== PORTALS ===== -->
+<!-- ===== PORTALS PREVIEW ===== -->
 <section id="portals" class="container-xx mx-auto px-4 py-14">
   <h2 class="text-3xl font-extrabold" data-i18n="portals_h2">Portals</h2>
   <div class="grid md:grid-cols-3 gap-6 mt-8">
@@ -288,7 +296,9 @@
     </label>
     <div class="grid grid-cols-2 gap-3 mt-3">
       <label>Months
-        <select id="months" class="border p-2 rounded w-full mt-1"><option>12</option><option>9</option><option>6</option><option>3</option></select>
+        <select id="months" class="border p-2 rounded w-full mt-1">
+          <option>12</option><option>9</option><option>6</option><option>3</option>
+        </select>
       </label>
       <label>Service fee (annual, %)
         <input id="fee" type="number" min="0" max="20" step="0.1" value="3.0" class="border p-2 rounded w-full mt-1">
@@ -373,17 +383,6 @@
   </div>
 </section>
 
-<!-- ===== FAQ ===== -->
-<section id="faq" class="container-xx mx-auto px-4 py-14">
-  <h2 class="text-3xl font-extrabold">FAQ</h2>
-  <div class="mt-6 grid md:grid-cols-2 gap-6">
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Is this live with payments?</h3><p class="text-gray-600 mt-2">This is a demo UI; payments flow (YXZ) is disabled here.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Do you support deposit insurance?</h3><p class="text-gray-600 mt-2">Yes — partner <b>XYZ</b> (optional in checkout).</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Is KYC/AML required?</h3><p class="text-gray-600 mt-2">For suspicious cases and by bank request. In MVP we keep minimal data.</p></div>
-    <div class="p-5 border rounded-2xl shadow-soft"><h3 class="font-semibold">Can agents add listings?</h3><p class="text-gray-600 mt-2">Yes — see the Agent demo block (stored locally).</p></div>
-  </div>
-</section>
-
 <!-- ===== FOOTER ===== -->
 <footer class="bg-sand border-t">
   <div class="container-xx mx-auto px-4 py-10 grid md:grid-cols-4 gap-6">
@@ -427,9 +426,27 @@
   </div>
 </div>
 
+<!-- ===== AI Assistant (on-device) ===== -->
+<button id="ai-fab" aria-label="AI Assistant"
+        style="position:fixed;left:12px;bottom:12px;width:56px;height:56px;border-radius:9999px;
+               display:flex;align-items:center;justify-content:center;background:#16543C;color:#fff;
+               box-shadow:0 10px 24px rgba(0,0,0,.25);z-index:99999">
+  AI
+</button>
+<div id="ai" class="ai-panel">
+  <div class="ai-head">
+    <strong>BaySulu Assistant (demo)</strong>
+    <button id="ai-close" class="px-2 py-1 border rounded">×</button>
+  </div>
+  <div id="ai-feed" class="ai-feed"></div>
+  <form id="ai-form" class="ai-form">
+    <input id="ai-input" class="border rounded flex-1 p-2" placeholder="Ask about payouts, agent fees, insurance…">
+    <button class="px-3 py-2 bg-brand text-white rounded">Ask</button>
+  </form>
+</div>
+
 <!-- ===== LOGIC ===== -->
 <script>
-/* i18n */
 const I18N={
   en:{nav_features:"Features",nav_how:"How it works",nav_listings:"Listings",nav_agents:"Agents",nav_pricing:"Pricing",nav_faq:"FAQ",nav_portals:"Portals",
       hero_h1:"Monthly rentals in Abu Dhabi & UAE",features_h2:"Why BaySulu",features_p:"Clear value for tenants, landlords, and agents.",
@@ -439,43 +456,36 @@ const I18N={
       how_h2:"How it works",listings_h2:"Featured listings",listings_p:"Installments available",listings_cta:"Become an agent",
       portals_h2:"Portals",agents_h2:"For Agents",agents_p:"Close more deals, faster, and earn commissions.",
       agents_li1:"Commission: ",agents_li2:"Agent dashboard + WhatsApp integration",agents_li3:"Training and support",
-      agent_demo_h3:"Add Listing (demo)",pricing_h2:"Pricing & Security",pricing_fee_h3:"Fees (demo)",
-      pricing_fee_1:"Platform fee: ",pricing_fee_2:"Tenants see monthly amount incl. fees",pricing_fee_3:"Agents: per deal commission (see above)",
+      agent_demo_h3:"Add Listing (demo)",pricing_h2:"Pricing & Security",pricing_fee_h3:"Fees (demo)",pricing_fee_1:"Platform fee: ",pricing_fee_2:"Tenants see monthly amount incl. fees",pricing_fee_3:"Agents: per deal commission (see above)",
       sec_h3:"Security & Compliance",sec_1:"SSL/TLS everywhere",sec_2:"3-D Secure via YXZ, tokenization",sec_3:"No card data stored on BaySulu",sec_4:"ADGM data protection principles",
       register_h2:"Create your BaySulu account (demo)",fb_h2:"Feedback",ph_address:"Address",ph_price:"Price (AED)",no_listings:"No listings yet"},
   ar:{nav_features:"المزايا",nav_how:"كيف يعمل",nav_listings:"العقارات",nav_agents:"للوكلاء",nav_pricing:"الأسعار",nav_faq:"الأسئلة الشائعة",nav_portals:"لوحات التحكم",
       hero_h1:"دفعات إيجار شهرية في أبوظبي والإمارات",features_h2:"لماذا باي سولو",features_p:"قيمة واضحة للمستأجرين والمالكين والوكلاء.",
       f1_badge:"خطة شهرية",f1_h3:"ادفع شهريًا بدل الشيكات",f1_p:"خصم تلقائي عبر YXZ؛ حماية 3-D Secure. لا نخزن بيانات البطاقات.",
-      f2_badge:"موثّق",f2_h3:"عقارات موثّقة ومراجعة",f2_p:"مراجعة يدوية في مرحلة MVP.",
-      f3_badge:"تأمين",f3_h3:"تأمين الوديعة (اختياري)",f3_p:"عبر الشريك XYZ.",
+      f2_badge:"موثّق",f2_h3:"قوائم موثّقة ومراجعة",f2_p:"مراجعة يدوية في مرحلة MVP.",f3_badge:"تأمين",f3_h3:"تأمين الوديعة (اختياري)",f3_p:"عبر الشريك XYZ.",
       how_h2:"كيف يعمل",listings_h2:"عقارات مميزة",listings_p:"التقسيط متاح",listings_cta:"كن وكيلاً",
       portals_h2:"لوحات التحكم",agents_h2:"للوكلاء",agents_p:"أغلق المزيد من الصفقات بسرعة واحصل على عمولات.",
       agents_li1:"العمولة: ",agents_li2:"لوحة الوكيل + واتساب",agents_li3:"تدريب ودعم",
-      agent_demo_h3:"إضافة عقار (تجريبي)",pricing_h2:"الأسعار والأمان",pricing_fee_h3:"الرسوم (تجريبي)",pricing_fee_1:"رسوم المنصة: ",pricing_fee_2:"المستأجر يرى المبلغ الشهري شامل الرسوم",pricing_fee_3:"عمولة الوكيل لكل صفقة",
-      sec_h3:"الأمن والامتثال",sec_1:"SSL/TLS في كل مكان",sec_2:"3-D Secure وتوكن",sec_3:"لا نخزن بيانات البطاقات",sec_4:"مبادئ ADGM",
-      register_h2:"إنشاء حساب (تجريبي)",fb_h2:"ملاحظات",ph_address:"العنوان",ph_price:"السعر (درهم)",no_listings:"لا توجد عقارات بعد"},
+      agent_demo_h3:"إضافة عقار (تجريبي)",pricing_h2:"الأسعار والأمان",pricing_fee_h3:"الرسوم (تجريبي)",pricing_fee_1:"رسوم المنصة: ",pricing_fee_2:"المستأجر يرى المبلغ الشهري شامل الرسوم",pricing_fee_3:"عمولة الوكيل",
+      sec_h3:"الأمن والامتثال",sec_1:"SSL/TLS في كل مكان",sec_2:"3-D Secure",sec_3:"لا نخزن بيانات البطاقات",sec_4:"ADGM",register_h2:"إنشاء حساب (تجريبي)",fb_h2:"ملاحظات",ph_address:"العنوان",ph_price:"السعر (درهم)",no_listings:"لا توجد عقارات بعد"},
   ru:{nav_features:"Функции",nav_how:"Как это работает",nav_listings:"Объявления",nav_agents:"Агентам",nav_pricing:"Цены",nav_faq:"FAQ",nav_portals:"Порталы",
       hero_h1:"Помесячная аренда в Абу-Даби и ОАЭ",features_h2:"Почему BaySulu",features_p:"Понятная ценность для арендаторов, владельцев и агентов.",
       f1_badge:"Помесячный план",f1_h3:"Платите помесячно вместо чеков",f1_p:"Автосписание YXZ; 3-D Secure; данные карт не храним.",
-      f2_badge:"Проверено",f2_h3:"Модерация объявлений",f2_p:"Ручная проверка на этапе MVP.",
-      f3_badge:"Страховка",f3_h3:"Страхование депозита (опция)",f3_p:"Партнёр XYZ.",
+      f2_badge:"Проверено",f2_h3:"Модерация объявлений",f2_p:"Ручная проверка на этапе MVP.",f3_badge:"Страховка",f3_h3:"Страхование депозита (опция)",f3_p:"Партнёр XYZ.",
       how_h2:"Как это работает",listings_h2:"Избранные объявления",listings_p:"Доступна рассрочка",listings_cta:"Стать агентом",
       portals_h2:"Порталы",agents_h2:"Для агентов",agents_p:"Закрывайте сделки быстрее и зарабатывайте больше.",
       agents_li1:"Комиссия: ",agents_li2:"Панель агента + WhatsApp",agents_li3:"Обучение и поддержка",
-      agent_demo_h3:"Добавить объявление (демо)",pricing_h2:"Цены и безопасность",pricing_fee_h3:"Комиссии (демо)",pricing_fee_1:"Комиссия платформы: ",pricing_fee_2:"Показываем месячную сумму с комиссиями",pricing_fee_3:"Агентам — комиссия за сделку",
-      sec_h3:"Безопасность и соответствие",sec_1:"SSL/TLS везде",sec_2:"3-D Secure и токенизация",sec_3:"Данные карт не храним",sec_4:"Принципы ADGM",
+      agent_demo_h3:"Добавить объявление (демо)",pricing_h2:"Цены и безопасность",pricing_fee_h3:"Комиссии (демо)",pricing_fee_1:"Комиссия платформы: ",pricing_fee_2:"Показываем месячную сумму с комиссиями",pricing_fee_3:"Агентам — комиссия",
+      sec_h3:"Безопасность и соответствие",sec_1:"SSL/TLS",sec_2:"3-D Secure",sec_3:"Данные карт не храним",sec_4:"ADGM",
       register_h2:"Создать аккаунт (демо)",fb_h2:"Обратная связь",ph_address:"Адрес",ph_price:"Цена (AED)",no_listings:"Пока нет объявлений"},
   zh:{nav_features:"功能",nav_how:"工作原理",nav_listings:"房源",nav_agents:"经纪人",nav_pricing:"价格",nav_faq:"常见问题",nav_portals:"门户",
       hero_h1:"阿布扎比及阿联酋月付租房",features_h2:"为何选择 BaySulu",features_p:"为租客、房东与经纪人提供清晰价值。",
       f1_badge:"月付计划",f1_h3:"按月支付而非支票",f1_p:"通过 YXZ 自动扣款；3-D Secure 安全；不存储卡数据。",
-      f2_badge:"已验证",f2_h3:"房源审核",f2_p:"MVP 阶段人工审核。",
-      f3_badge:"押金保险",f3_h3:"可选押金保险",f3_p:"XYZ 合作方。",
-      how_h2:"工作原理",listings_h2:"精选房源",listings_p:"支持分期",listings_cta:"成为经纪人",
-      portals_h2:"门户",agents_h2:"经纪人",agents_p:"更快成交，获得更多佣金。",
-      agents_li1:"佣金：",agents_li2:"经纪面板 + WhatsApp",agents_li3:"培训与支持",
+      f2_badge:"已验证",f2_h3:"房源审核",f2_p:"MVP 阶段人工审核。",f3_badge:"押金保险",f3_h3:"可选押金保险",f3_p:"XYZ 合作方。",
+      how_h2:"工作原理",listings_h2:"精选房源",listings_p:"支持分期",listings_cta:"成为经纪人",portals_h2:"门户",
+      agents_h2:"经纪人",agents_p:"更快成交，获得更多佣金。",agents_li1:"佣金：",agents_li2:"经纪人面板 + WhatsApp",agents_li3:"培训与支持",
       agent_demo_h3:"添加房源（演示）",pricing_h2:"价格与安全",pricing_fee_h3:"费用（演示）",pricing_fee_1:"平台费：",pricing_fee_2:"月付金额含费用",pricing_fee_3:"经纪人佣金",
-      sec_h3:"安全与合规",sec_1:"全站 SSL/TLS",sec_2:"3-D Secure 与令牌化",sec_3:"不存储银行卡数据",sec_4:"ADGM 数据保护原则",
-      register_h2:"创建账户（演示）",fb_h2:"反馈",ph_address:"地址",ph_price:"价格 (AED)",no_listings:"暂无房源"}
+      sec_h3:"安全与合规",sec_1:"SSL/TLS",sec_2:"3-D Secure",sec_3:"不存储银行卡数据",sec_4:"ADGM",register_h2:"创建账户（演示）",fb_h2:"反馈",ph_address:"地址",ph_price:"价格 (AED)",no_listings:"暂无房源"}
 };
 const BANNER_TEXT={
   en:"Demo only: This is a demonstration. All payments, calendars and chats are simulated (no backend).",
@@ -484,6 +494,7 @@ const BANNER_TEXT={
   zh:"仅演示：这是演示版本。所有支付、日程与聊天均为模拟（无后端）。"
 };
 
+/* state */
 const S={locale:localStorage.getItem('bs_locale')||'en',
          agent:JSON.parse(localStorage.getItem('bs_agent')||'[]'),
          view: JSON.parse(localStorage.getItem('bs_viewings')||'[]'),
@@ -492,6 +503,7 @@ const S={locale:localStorage.getItem('bs_locale')||'en',
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 const fmt=n=>new Intl.NumberFormat('en-AE',{maximumFractionDigits:2}).format(n);
 
+/* Brand & WA */
 function applyBrand(){
   $('#platform-fee')  && ($('#platform-fee').textContent  = PLATFORM_FEE_TX);
   $('#platform-fee-2')&& ($('#platform-fee-2').textContent= PLATFORM_FEE_TX);
@@ -502,17 +514,19 @@ function applyBrand(){
   const fab=document.getElementById('wa-fab'); if(fab) fab.href=wa;
 }
 
+/* Locale */
 function setLocale(loc){
   S.locale=loc; localStorage.setItem('bs_locale',loc);
   document.documentElement.lang=loc; document.documentElement.dir=(loc==='ar'?'rtl':'ltr');
   const d=I18N[loc]||I18N.en;
   $$('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n'); if(d[k]) el.textContent=d[k];});
   $$('[data-i18n-placeholder]').forEach(el=>{const k=el.getAttribute('data-i18n-placeholder'); if(d[k]) el.setAttribute('placeholder',d[k]);});
-  const tl=document.getElementById('tagline'); if(tl) tl.textContent=(loc==='ar'?TAG_AR:TAG_EN);
-  const b=document.querySelector('.demo-banner'); if(b){ b.textContent=''; const s=document.createElement('span'); s.id='banner-i18n'; s.textContent=BANNER_TEXT[loc]||BANNER_TEXT.en; b.appendChild(s); }
-  ;['en','ar','ru','zh'].forEach(k=>document.getElementById('lang-'+k)?.classList.toggle('font-bold',k===loc));
+  const tl=$('#tagline'); if(tl) tl.textContent=(loc==='ar'?"ادفع شهريًا بدلًا من 4–6 شيكات.":"Pay monthly instead of 4–6 cheques.");
+  const b=$('.demo-banner'); if(b){ b.textContent=''; const s=document.createElement('span'); s.id='banner-i18n'; s.textContent=BANNER_TEXT[loc]||BANNER_TEXT.en; b.appendChild(s); }
+  ;['en','ar','ru','zh'].forEach(k=>$('#lang-'+k)?.classList.toggle('font-bold',k===loc));
 }
 
+/* Listings */
 function renderListings(){
   const grid=$('#listings-grid'); if(!grid) return;
   const LS=[
@@ -532,6 +546,7 @@ function renderListings(){
     </div>`).join('');
 }
 
+/* Agent */
 function renderAgent(){
   const wrap=$('#agent-cards'), empty=$('#agent-empty'); if(!wrap||!empty) return;
   empty.classList.toggle('hidden',S.agent.length>0);
@@ -543,6 +558,7 @@ function renderAgent(){
     </div>`).join('');
 }
 
+/* Viewings */
 function renderViewings(){
   const list=$('#viewing-list'); if(!list) return;
   const filter=$('#vw-filter')?.value||'all';
@@ -557,17 +573,19 @@ function renderViewings(){
         <a class="px-3 py-1 border rounded text-sm" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hi! I scheduled a viewing on '+v.date+' '+v.time)}" target="_blank" rel="noreferrer">WhatsApp</a>
       </div>
     </div>`).join('');
-  $$('.vw-del').forEach(btn=>{btn.onclick=()=>{const i=+btn.getAttribute('data-i'); S.view.splice(i,1); localStorage.setItem('bs_viewings',JSON.stringify(S.view)); renderViewings();}});
+  $$('.vw-del').forEach(btn=>{
+    btn.onclick=()=>{const i=+btn.getAttribute('data-i'); S.view.splice(i,1); localStorage.setItem('bs_viewings',JSON.stringify(S.view)); renderViewings();}
+  });
 }
 
+/* Calculator */
 function runCalc(){
-  const r=parseFloat($('#rent')?.value)||0;
-  const m=parseInt($('#months')?.value)||12;
-  const f=parseFloat($('#fee')?.value)||3.0;
+  const r=parseFloat($('#rent')?.value)||0, m=parseInt($('#months')?.value)||12, f=parseFloat($('#fee')?.value)||3.0;
   const fee=r*(f/100), total=r+fee, monthly=(m>0?total/m:0);
   const out=$('#out'); if(out) out.innerHTML=`<b>Monthly (approx): AED ${fmt(monthly)}</b><br>Tenant pays total ~ AED ${fmt(total)} (${fmt(r)} rent + AED ${fmt(fee)} service).<br><small>Demo only. Rates/fees are illustrative.</small>`;
 }
 
+/* Chat */
 function renderChat(){
   const room=$('#chat-room')?.value||'general', feed=$('#chat-feed'); if(!feed) return;
   const items=S.chat[room]||[];
@@ -580,6 +598,7 @@ function renderChat(){
   feed.scrollTop=feed.scrollHeight;
 }
 
+/* Popup (Agent tour) */
 function setupPopup(){
   const openBtn=$('#openTour'), modal=$('#agentTour'), dialog=$('#agentTourDialog'), closeBtn=$('#closeTour'), video=$('#agentVideo');
   if(!modal||!openBtn) return;
@@ -590,10 +609,24 @@ function setupPopup(){
   document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.style.display==='flex') close(); });
 }
 
+/* AI-lite — KB (EN/RU/AR/中文) */
+const KB = [
+  {lang:'en', q:'payouts flow', a:'Tenant pays monthly via bank; bank pays landlord upfront; agent commission & platform fees are split per agreement.'},
+  {lang:'ru', q:'комиссия агента', a:'Агент указывает IBAN при регистрации; платформа инициирует выплату через API банка; банк перечисляет агенту.'},
+  {lang:'ar', q:'هل تخزن المنصة بيانات البطاقات', a:'لا. تمر البيانات للبنك عبر API والبنك هو من يحفظ ويعالج المدفوعات.'},
+  {lang:'zh', q:'保险 结算', a:'保费经银行清分：保险公司到账、平台收取佣金。'},
+  {lang:'en', q:'subscription fee', a:'Landlord subscription can be monthly or one-off; bank splits platform share automatically.'},
+  {lang:'ru', q:'iban хранение', a:'В партнёрской модели IBAN хранит банк; платформа только передаёт через API.'}
+];
+function _tok(s){return (s||'').toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]+/gu,' ').trim().split(/\s+/)}
+function _score(q1,q2){const a=new Set(_tok(q1)),b=new Set(_tok(q2));if(!a.size||!b.size)return 0;let i=0;a.forEach(t=>b.has(t)&&i++);return i/Math.sqrt(a.size*b.size)}
+function aiBest(query, lang){const pool=KB.filter(x=>x.lang===lang);const arr=pool.length?pool:KB;let best=null,bs=0;arr.forEach(x=>{const s=_score(query,x.q);if(s>bs){bs=s;best=x}});if(!best||bs<0.12)return lang==='ru'?'Уточните вопрос.':'Please clarify your question.';return best.a}
+
+/* INIT */
 document.addEventListener('DOMContentLoaded',()=>{
   applyBrand();
 
-  // dark mode
+  // Dark
   const root=document.documentElement, btn=$('#themeToggle');
   if(localStorage.getItem('bs_theme')==='dark'){root.classList.add('dark')}
   const setLbl=()=>btn.textContent=root.classList.contains('dark')?'Light':'Dark';
@@ -609,7 +642,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   // listings
   renderListings();
 
-  // registration
+  // Registration
   $('#reg-form')?.addEventListener('submit',e=>{
     e.preventDefault();
     const user={name:$('#reg-name').value.trim(),email:$('#reg-email').value.trim(),phone:$('#reg-phone').value.trim(),pass:$('#reg-pass').value};
@@ -619,7 +652,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     e.target.reset(); $('#reg-ok')?.classList.remove('hidden');
   });
 
-  // agent form
+  // Agent form
   $('#agent-form')?.addEventListener('submit',e=>{
     e.preventDefault();
     const addr=$('#f-address').value.trim(), price=$('#f-price').value.trim();
@@ -630,10 +663,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   renderAgent();
 
-  // calculator
+  // Calculator
   $('#calcBtn')?.addEventListener('click',runCalc); runCalc();
 
-  // viewings
+  // Viewings
   $('#viewing-form')?.addEventListener('submit',e=>{
     e.preventDefault();
     const name=$('#vw-name').value.trim(), role=$('#vw-role').value, date=$('#vw-date').value, time=$('#vw-time').value;
@@ -646,7 +679,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('#vw-clear')?.addEventListener('click',()=>{ if(confirm('Clear all viewings?')){ S.view=[]; localStorage.setItem('bs_viewings','[]'); renderViewings(); }});
   renderViewings();
 
-  // chat
+  // Chat
   $('#chat-form')?.addEventListener('submit',e=>{
     e.preventDefault();
     const room=$('#chat-room').value, role=$('#chat-role').value, name=$('#chat-name').value.trim(), text=$('#chat-input').value.trim();
@@ -658,16 +691,30 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('#chat-room')?.addEventListener('change',renderChat);
   renderChat();
 
-  // popup
+  // Popup
   setupPopup();
 
-  // nav highlight
+  // Nav active
   document.addEventListener('click',e=>{
     const n=e.target.closest('.nav-link'); if(n){ $$('.nav-link').forEach(x=>x.classList.remove('active')); n.classList.add('active'); }
   });
+
+  // AI open/close
+  const aiPanel=$('#ai'); const aiFab=$('#ai-fab'); const aiClose=$('#ai-close'); const aiFeed=$('#ai-feed'); const aiForm=$('#ai-form'); const aiInput=$('#ai-input');
+  aiFab?.addEventListener('click',()=>{ aiPanel.style.display='flex'; aiFeed.scrollTop=aiFeed.scrollHeight; });
+  aiClose?.addEventListener('click',()=>{ aiPanel.style.display='none'; });
+  aiForm?.addEventListener('submit',e=>{
+    e.preventDefault();
+    const q=(aiInput.value||'').trim(); if(!q) return;
+    const lang=S.locale||'en';
+    aiFeed.insertAdjacentHTML('beforeend', `<div class="ai-msg ai-user">👤 ${q}</div>`);
+    const a=aiBest(q, lang);
+    aiFeed.insertAdjacentHTML('beforeend', `<div class="ai-msg ai-bot">🤖 ${a}</div>`);
+    aiInput.value=''; aiFeed.scrollTop=aiFeed.scrollHeight;
+  });
 });
 
-/* iOS anti-zoom stickiness — только для Safari/iOS */
+/* iOS anti-zoom for FAB (только iOS Safari) */
 (function(){
   const fab=document.getElementById('wa-fab');
   const iOS=/iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -694,4 +741,4 @@ document.addEventListener('DOMContentLoaded',()=>{
 </a>
 
 </body>
-</html> 
+</html>
